@@ -1,0 +1,10 @@
+    }
+
+}
+
+Plugin {
+        type = space
+        config {
+                size = 2
+        }
+}

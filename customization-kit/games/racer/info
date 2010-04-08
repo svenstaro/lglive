@@ -1,0 +1,5 @@
+NAME=[Racer]
+VERSION=[0.5.4-beta1]
+LICENSE=[custom]
+GENRE=[Racing simulation]
+DESC=[Racer is a free car simulation project, using real car physics to get a realistic feeling. Cars, tracks, scenes and such can be created with relative simplicity in mind (compared to other driving simulations).]

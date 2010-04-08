@@ -1,0 +1,185 @@
+LIMITED SOFTWARE WARRANTY AND LICENSE AGREEMENT
+
+YOUR USE OF THIS SOFTWARE IS SUBJECT TO THIS LIMITED SOFTWARE WARRANTY
+AND LICENSE AGREEMENT (THE "AGREEMENT") AND THE TERMS SET FORTH
+BELOW. THE "SOFTWARE" INCLUDES ALL SOFTWARE INCLUDED WITH THIS
+AGREEMENT, THE ACCOMPANYING MANUAL (S), PACKAGING AND OTHER WRITTEN,
+ELECTRONIC OR ON-LINE MATERIALS OR DOCUMENTATION, AND ANY AND ALL
+COPIES OF SUCH SOFTWARE AND ITS MATERIALS. BY OPENING THE SOFTWARE,
+INSTALLING, AND/OR USING THE SOFTWARE AND ANY OTHER MATERIALS INCLUDED
+WITH THE SOFTWARE, YOU HEREBY ACCEPT THE TERMS OF THIS LICENSE WITH
+[TAKE-TWO INTERACTIVE SOFTWARE, INC.] ("LICENSOR").
+LICENSE. Subject to this Agreement and its terms and conditions,
+LICENSOR hereby grants you the non-exclusive, non-transferable, limited
+right and license to use one copy of the Software for your personal use
+on a single home or portable computer. The Software is being licensed
+to you and you hereby acknowledge that no title or ownership in the
+Software is being transferred or assigned and this Agreement should not
+be construed as a sale of any rights in the Software. All rights not
+specifically granted under this Agreement are reserved by LICENSOR and,
+as applicable, its licensors.
+OWNERSHIP. LICENSOR retains all right, title and interest to this
+Software, including, but not limited to, all copyrights, trademarks,
+trade secrets, trade names, proprietary rights, patents, titles,
+computer codes, audiovisual effects, themes, characters, character
+names, stories, dialog, settings, artwork, sounds effects, musical
+works, and moral rights. The Software is protected by United States
+copyright law and applicable copyright laws and treaties throughout the
+world. The Software may not be copied, reproduced or distributed in any
+manner or medium, in whole or in part, without prior written consent
+from LICENSOR. Any persons copying, reproducing or distributing all or
+any portion of the Software in any manner or medium, will be willfully
+violating the copyright laws and may be subject to civil and criminal
+penalties. Be advised that Copyright violations are subject to
+penalties of up to $100,000 per violation. The Software contains
+certain licensed materials and LICENSOR's licensors may protect their
+rights in the event of any violation of this Agreement.
+LICENSE CONDITIONS
+You agree not to:
+(a) Commercially exploit the Software;
+(b) Distribute, lease, license, sell, rent or otherwise transfer or
+assign this Software, or any copies of this Software, without the
+express prior written consent of LICENSOR;
+(c) Make copies of the Software or any part thereof, except for back up
+or archival purposes;
+(d) Except as otherwise specifically provided by the Software or this
+Agreement, use or install the Software (or permit others to do same) on
+a network, for on-line use, or on more than one computer, computer
+terminal, or workstation at the same time;
+(e) Copy the Software onto a hard drive or other storage device and
+must run the Software from the included CD-ROM (although the Software
+may automatically copy a portion of itself onto your hard drive during
+installation in order to run more efficiently);
+(f) Use or copy the Software at a computer gaming center or any other
+location-based site; provided, that LICENSOR may offer you a separate
+site license agreement to make the Software available for commercial
+use;.
+(g) Reverse engineer, decompile, disassemble or otherwise modify the
+Software, in whole or in part;
+(h) Remove or modify any proprietary notices or labels contained on or
+within the Software; and
+(i) Transport, export or re-export (directly or indirectly) into any
+country forbidden to receive such Software by any U.S. export laws or
+accompanying regulations or otherwise violate such laws or regulations,
+that may be amended from time to time.
+THE SOFTWARE UTILITIES.
+The Software may contain a level editor or other similar type tools,
+assets and other materials (the "Software Utilities") that permit
+you to construct or customize new game levels and other related game
+materials for personal use in connection with the Software
+("Customized Game Materials"). In the event the Software contains
+such Software Utilities, the use of the Software Utilities is subject
+to the following additional terms, conditions and restrictions:
+(a) All Customized Game Materials created by you are exclusively owned
+by LICENSOR and/or its licensors (as the case may be) and you hereby
+transfer, assign and convey to LICENSOR all right, title and interest
+in and to the Customized Game Materials and LICENSOR and its permitted
+licensors may use any Customized Game Materials made publicly available
+to you for any purpose whatsoever, including but not limited to for
+purposes of advertising and promoting the Software; 
+(b) You will not use or permit third parties to use the Software
+Utilities and the Customized Game Materials created by you for any
+commercial purposes, including but not limited to distributing,
+leasing, licensing, renting, selling, or otherwise exploiting,
+transferring or assigning the ownership of such Customized Game
+Materials;
+(c) Customized Game Materials must be distributed solely for free;
+provided, that you may contact LICENSOR for a license to commercially
+exploit the Customized Game Materials which LICENSOR may grant or deny
+in its sole discretion;
+(d) Customized Game Materials shall not contain modifications to any
+other executable files;
+(e) Customized Game Materials must be used alone and can be created if
+the Customized Game Materials will be used exclusively in combination
+with the commercially released retail version of the Software.
+(f) Customized Game Materials cannot contain libelous, defamatory or
+other illegal material, material that is scandalous or invades the
+rights of privacy or publicity of any third party, or contain any
+trademarks, copyright-protected work or other property of third parties
+(without a valid license); and
+(g) All Customized Game Materials must contain the proper credits to
+the authors of the Customized Game Materials and must indicate that
+LICENSOR is not the author of the Customized Game Materials with
+additional language that "THIS MATERIAL IS NOT MADE, GUARANTEED OR
+SUPPORTED BY THE PUBLISHER OF THE SOFTWARE OR ITS AFFILIATES."
+LIMITED WARRANTY: LICENSOR warrants to you (if you are the initial and
+original purchaser of the Software) that the original storage medium
+holding the Software is free from defects in material and workmanship
+under normal use and service for 90 days from the date of purchase. If
+for any reason you find a defect in the storage medium during the
+warranty period, LICENSOR agrees to replace, free of charge, any
+Software discovered to be defective within the warranty period as long
+as the Software is currently being manufactured by LICENSOR. If the
+Software is no longer available, LICENSOR retains the right to
+substitute a similar program of equal or greater value. This warranty
+is limited to the storage medium containing the Software as originally
+provided by LICENSOR and is not applicable to normal wear and tear.
+This warranty shall not be applicable and shall be void if the defect
+has arisen through abuse, mistreatment, or neglect. Any implied
+warranties prescribed by statute are expressly limited to the 90-day
+period described above. 
+Except as set forth above, this warranty is in lieu of all other
+warranties, whether oral or written, express or implied, including any
+other warranty of merchantability, fitness for a particular purpose or
+non-infringement, and no other representations or warranties of any
+kind shall be binding on LICENSOR.
+When returning the Software subject to the limited warranty above,
+please send the original Software only to the LICENSOR address
+specified below and include: your name and return address; a photocopy
+of your dated sales receipt; and a brief note describing the defect and
+the system on which you are running the Software.
+IN NO EVENT WILL LICENSOR BE LIABLE FOR SPECIAL, INCIDENTAL OR
+CONSEQUENTIAL DAMAGES RESULTING FROM POSSESSION, USE OR MALFUNCTION OF
+THE SOFTWARE, INCLUDING DAMAGES TO PROPERTY, LOSS OF GOODWILL, COMPUTER
+FAILURE OR MALFUNCTION AND, TO THE EXTENT PERMITTED BY LAW, DAMAGES FOR
+PERSONAL INJURIES, EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY
+OF SUCH DAMAGES. LICENSOR'S LIABILITY SHALL NOT EXCEED THE ACTUAL
+PRICE PAID FOR USE OF THE SOFTWARE. SOME STATES/COUNTRIES DO NOT ALLOW
+LIMITATIONS ON HOW LONG AN IMPLIED WARRANTY LASTS AND/OR THE EXCLUSION
+OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE ABOVE
+LIMITATIONS AND/OR EXCLUSION OR LIMITATION OF LIABILITY MAY NOT APPLY
+TO YOU. THIS WARRANTY GIVES YOU SPECIFIC LEGAL RIGHTS, AND YOU MAY HAVE
+OTHER RIGHTS THAT VARY FROM JURISDICTION TO JURISDICTION.
+TERMINATION: This Agreement will terminate automatically if you fail to
+comply with its terms and conditions. In such event, you must destroy
+all copies of the Software and all of its component parts. You can also
+end this Agreement by destroying the Software and all copies and
+reproductions of the Software and deleting and permanently purging the
+Software from any client server or computer on which it has been
+installed. 
+U.S. GOVERNMENT RESTRICTED RIGHTS: The Software and documentation have
+been developed entirely at private expense and are provided as
+"Commercial Computer Software" or "restricted computer
+software." Use, duplication or disclosure by the U.S. Government or a
+U.S. Government subcontractor is subject to the restrictions set forth
+in subparagraph (c)(1)(ii) of the Rights in Technical Date and Computer
+Software clauses in DFARS 252.227-7013 or as set forth in subparagraph
+(c)(1) and (2) of the Commercial Computer Software Restricted Rights
+clauses at FAR 52.227-19, as applicable. The Contractor/ Manufacturer
+is the LICENSOR at the location listed below.
+EQUITABLE REMEDIES. You hereby agree that if the terms of this
+Agreement are not specifically enforced, LICENSOR will be irreparably
+damaged, and therefore you agree that LICENSOR shall be entitled,
+without bond, other security, proof of damages, to appropriate
+equitable remedies with respect any of this Agreement, in addition to
+any other available remedies.
+INDEMNITY: You agree to indemnify, defend and hold LICENSOR, its
+partners, licensors, affiliates, contractors, officers, directors,
+employees and agents harmless from all damages, losses and expenses
+arising directly or indirectly from your acts and omissions to act in
+using the Software pursuant to the terms of the Agreement.
+MISCELLANEOUS: This Agreement represents the complete agreement
+concerning this license between the parties and supersedes all prior
+agreements and representations between them. It may be amended only by
+a writing executed by both parties. If any provision of this Agreement
+is held to be unenforceable for any reason, such provision shall be
+reformed only to the extent necessary to make it enforceable and the
+remaining provisions of this Agreement shall not be affected. This
+Agreement shall be construed under New York law as such law is applied
+to agreements between New York residents entered into and to be
+performed within New York, except as governed by federal law and you
+consent to the exclusive jurisdiction of the sate and federal courts in
+New York, New York. IF YOU HAVE ANY QUESTIONS CONCERNING THIS LICENSE,
+YOU MAY CONTACT IN WRITING [TAKE-TWO INTERACTIVE SOFTWARE, INC.] 
+622 BROADWAY, NEW YORK, NY 10012.
+

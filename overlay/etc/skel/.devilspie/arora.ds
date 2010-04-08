@@ -1,0 +1,8 @@
+(if 
+	(contains (window_name) "Arora")
+	(begin
+		(geometry "900x450+0+0")
+		(center)
+	)
+)
+

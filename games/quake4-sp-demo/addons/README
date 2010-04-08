@@ -1,0 +1,58 @@
+Quake 4 (TM) GNU/Linux Demo
+===========================
+
+Installation instructions:
+--------------------------
+
+The Quake 4 (TM) GNU/Linux Demo will install to
+/usr/local/games/quake4-demo by default, and will not conflict
+with an installation of Quake 4 (TM) retail.
+
+PLEASE NOTE:  The Linux version of Quake 4 (TM) is NOT supported by
+Activision Customer Support.
+
+Start the game with the command: quake4-demo
+Start the dedicated server with the command: quake4-demoded
+
+For troubleshooting and help, see:
+http://zerowing.idsoftware.com/linux/
+
+Minimum system requirements:
+----------------------------
+
+- GNU/Linux system
+- Pentium(r) 4 2.0 GHz or Athlon(tm) XP 2000+ processor
+- 512MB RAM
+- Kernel 2.4, 2.6 is recommended
+- glibc >= 2.2.4
+
+3D acceleration ( not required for dedicated server ):
+   - SDL >= 1.2 [1]
+   - latest OpenGL drivers, correctly configured
+   - ATI(r) Radeon(r) 9700
+   - ATI Radeon 9800
+   - ATI Radeon X300 series
+   - ATI Radeon X550 series
+   - ATI Radeon X600 series
+   - ATI Radeon X700 series
+   - ATI Radeon X800 series
+   - ATI Radeon X850 series
+   - Nvidia(r) GeForce(TM) 3/Ti series
+   - Nvidia GeForce 4/Ti series
+   - Nvidia GeForce FX series
+   - Nvidia GeForce 6 series
+   - Nvidia GeForce 7 series
+
+Audio ( not required for dedicated server ):
+   - sound card with OSS or Alsa support, stereo and surround
+     sound are supported with both APIs
+   Alsa >= 1.0.6 is required
+
+Multiplayer:
+
+   - Internet (TCP/IP) and LAN (TCP/IP) play supported
+   - Internet play requires broadband connection
+
+--
+
+[1] - http://www.libsdl.org/

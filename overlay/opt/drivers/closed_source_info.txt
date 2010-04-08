@@ -1,0 +1,17 @@
+Dear User,
+
+a recent ATI or NVIDIA card has been found in your system. To be able to play the games on this DVD 3D support is mandatory. Unfortunately no free drivers are available for your card, which offer enough 3D performance. Since none of these manufacturers did so far reveal their specifications no high performance free drivers could be developed by the community. However the manufacturers offer their own proprietary drivers. There is some uncertainty whether it violates the GPL to use these closed source drivers in combination with the Linux kernel. Thus we decided not to install the drivers on the system. Nevertheless we provide packages which enable you to easily install them on your own in case you do not have moral concerns or feel uncomfortable about it.
+
+There are projects striving to develop free 3D drivers for recent cards like the nouveau project (http://nouveau.freedesktop.org/). And there are manufacturers like Intel (http://intellinuxgraphics.org/), who make necessary specifications available and actively support the development of free drivers. So hopefully others will follow soon. More information on progress of free driver development can be found at http://www.free3d.org/. 
+
+
+
+Dear open source enthusiast and kernel developer,
+
+we are aware of your point of view, that proprietary drivers are tainting the GPL v2 under which the kernel is licensed. We deeply respect your position. For sure the best solution would be to convince the manufacturers to free their drivers or open their specifications and we are engaged to reach this goal with the help of our community. We therefor ask you to take a good-tempered look at our point of view: There is a great community of gamers, who are not used to play games on Linux or to use Linux at all. We want them to see that gaming is possible in a familiar manner using the free operating system. We want them to be aware of this system not lacking in performance behind Windows and last but not least we want them to stand up and request open source drivers once they've sensed the taste of free software. We believe that a growing community increases the requests for open standards and specifications. The companies may recognize soon the great potential of freeing their software once the amount of users is high enough.
+
+kind regards,
+your linuX-gamers.net team <info@linuX-gamers.net>
+
+
+-- HAPPY FRAGGING!

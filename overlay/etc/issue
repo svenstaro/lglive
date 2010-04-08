@@ -1,0 +1,18 @@
+[H[2J
+live.linuX-gamers.net (\l)
+\s-\r \m.
+***************************************************************
+* Welcome to the live.linuX-gamers.net live DVD/USB           *
+*                                                             *
+* If you are seeing this, X (the graphics manager) probably   *
+* failed to start up correctly. In this case, you can try the *
+* following:                                                  *
+* 1) Login as user 'gamer' (no password required)             *
+* 2) Type: sudo rm /etc/X11/xorg.conf                         *
+* 3) Now type: startx                                         *
+*                                                             *
+* Tip: Use the 'km' utility to change your keyboard layout    *
+*      and console font.                                      *
+*                                                             *
+* Have fun playing and be sure to visit live.linux-gamers.net *
+***************************************************************

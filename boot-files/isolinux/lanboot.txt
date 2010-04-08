@@ -1,0 +1,28 @@
+What is the LAN-Host boot option?
+LAN-Hosting is a highly experimental yet very cool feature that allows other
+people in your network to boot completely diskless, provided your network
+connection is stable. Effectively, you will only need one instance of lglive
+on your whole network which everybody can boot from. How cool is that?
+This is the ultimate emergency LAN-Party feature ;).
+
+How does it work?
+The process goes as follows: 
+1) You boot your live system using the LAN-Host option.
+2) Once the lglive desktop shows, you tell people to boot their computers
+   but press their boot selection keys just before the BIOS screen goes past.
+   Usually, the key is F8 or F12. Once your are in the boot selection screen,
+   choose something along the lines of "Network Boot". Every modern BIOS
+   supports this. If you can't find this option, look around the BIOS settings
+   themselves and see if there's an option to "Enable LAN Boot ROM" or 
+   anything like that.
+3) You let the diskless clients boot up like this one by one.
+4) ???
+5) PROFIT!
+
+Possible pitfalls:
+- It might fail if a DHCP server is already running on the network.
+- You need a fast network and a quick host computer.
+- Probably not working for wireless clients.
+
+If something goes wrong, tell me.
+-- Sven-Hendrik Haase <sh@lutzhaase.com>

@@ -1,0 +1,169 @@
+# This  should  be  a  somewhat  complete  list  of  people  who  have
+# contributed to  Neverball.  The  format is  copied from  the AUTHORS
+# file in the XMMS2 source tree, where  in turn it was copied from the
+# CREDITS file  in the  Linux kernel source  tree...  The  fields are:
+# name (N), e-mail  (E), website (W), PGP key ID  and fingerprint (P),
+# description (D).
+#
+# This list is sorted alphabetically.
+
+N: Ben Anderson
+D: Mac OS X build maintenance and packaging
+D: Icons
+
+N: Derek Arndt
+D: Mac OS X packaging
+
+N: Erik Auerswald
+D: Mouse invert
+
+N: Kevin Ballard
+D: Various bug fixes for Mac OS X builds
+
+N: Josh Bush
+D: SVG icons
+D: Screenshot naming tweaks
+D: Teleport design
+
+N: Challenge Space Yard (alias)
+E: challengespaceyard@gmail.com
+D: High-score updates
+D: Neverputt tweaks
+
+N: Miguel Diago
+E: mdiagom@gmail.com
+D: Spanish translation
+
+N: Corey Edwards
+D: Joystick select
+
+N: Luc Fabresse
+D: Mac OS X packaging
+
+N: Christoph Frick
+D: Mac OS X port
+
+N: Max Gilead
+D: Debian packaging
+
+N: François Guillet
+D: Neverball Hall of Fame development and hosting
+D: Neverforum and Neverwiki installation and hosting
+
+N: Phil Harper
+D: TheOpenCD packaging
+D: Icons
+
+N: Kyle Hoker
+D: Feature ideas and testing
+
+N: Karl Ove Hufthammer
+E: karl@huftis.org
+D: Norwegian Nynorsk translation
+
+N: Byron James Johnson
+D: Neverputt course
+D: Platform acceleration toggle
+D: Various fixes
+
+N: Pasi Kallinen
+E: paxed@alt.org
+D: Finnish translation
+D: Neverputt courses
+D: mapc tweaks
+
+N: Robert Kooima
+E: robert.kooima@gmail.com
+D: Developer
+D: Grand Poobah of the Neverball Rabble
+D: Original author/composer/graphics artist
+
+N: Lazrhog (alias)
+D: iPhone/iPod Touch port
+
+N: Jeremy Messenger
+D: FreeBSD port
+
+N: Michael Middleton
+D: Neverputt course
+
+N: Laurent Moussault
+D: Menu navigation improvements
+D: Interface layout improvements
+D: Neverputt joystick and keyboard support
+D: New pause screen
+D: I18n improvements
+D: Various bug fixes and features
+
+N: David Olsen
+D: Neverball maps
+D: Textures
+D: Grow/shrink items
+D: Level intro texts
+D: Major improvements to curve generation program (contrib/curve.c)
+
+N: Jordà Polo
+D: Debian packaging
+D: Neverputt score fixes
+D: .desktop file i18n
+D: Catalan translation
+
+N: Florian Priester
+D: Mapper
+D: German translation
+D: Texture clean-up
+D: Ball shadow removal in poser mode
+D: Performance improvement on maps not using reflective materials
+
+N: Jean Privat
+D: Developer (inactive)
+D: French translation
+D: Internationalisation
+D: Various bug fixes and features
+
+N: Jānis Rūcis
+E: parasti@gmail.com
+D: Developer
+D: Latvian translation
+
+N: Alexander Schmehl
+D: Debian packaging
+
+N: Michael Sterret
+D: Gentoo ebuild
+
+N: Lars Stoltenow
+D: mapc speed-ups for debugging large maps
+
+N: Tamas Szerb
+D: Debian packaging
+
+N: Uoti Urpala
+D: Bounces with moving objects
+D: Significant mapc optimisations
+
+N: Georg Wachter
+E: georgwachter@gmail.com
+D: German translation
+
+N: Ian Walker
+D: Mapper
+D: Textures
+D: Neverball Medium set organisation
+
+N: Mehdi Yousfi-Monod
+E: mehdi.yousfi@gmail.com
+D: Mapper
+D: French translation
+D: Neverball Hall of Fame management
+D: Windows packaging
+
+# No names should follow this comment  and unless you really are after
+# "Mehdi Yousfi-Monod" when sorted alphabetically, don't add your name
+# here.
+
+# This "contributor" is special.
+N: Countless others for play testing and bug reports
+W: http://www.happypenguin.org/
+W: http://www.flipcode.com/
+

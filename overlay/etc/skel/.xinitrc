@@ -1,0 +1,17 @@
+#!/bin/sh
+# ~~/.xinitrc
+#
+# Executed by startx (run your window manager from here)
+
+xsetroot -cursor_name watch
+#xsetroot -cursor_name left_ptr
+feh --bg-center ~/.blackbox/Backgrounds/bg.png
+
+/opt/bin/wbar_restore
+
+#devilspie&
+/opt/greeter.sh&
+
+# enable ctrl-alt-backspace again for easy x-killage
+setxkbmap -option terminate:ctrl_alt_bksp&
+exec blackbox

@@ -1,0 +1,5 @@
+#!/bin/bash
+(xsetroot -cursor_name watch ; sleep 10 ; xsetroot -cursor_name left_ptr)&
+killall wbar
+$1
+/opt/bin/wbar_restore

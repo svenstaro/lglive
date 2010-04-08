@@ -1,0 +1,33 @@
+== Building your own iso ==
+
+=== Getting started ===
+
+Before trying to get started building this, be advised that I have only tested on Arch Linux so far. It should work on any distro with a little of manual work involved.
+
+=== Getting dependencies ===
+
+You need the following for now:
+* Up-to-date Arch Linux system
+* archiso-git installed from AUR
+* squashfs-tools
+* aufs2-util
+* grub
+* syslinux
+* cdrtools from AUR (cdrkit mostly works too)
+* devtools from [extra]
+
+=== Building ===
+
+Run 
+ sudo ./buildscript all 
+to build all available images. 
+If that works, go hug somebody! If it doesn't, oh well :(.
+
+=== Writing to medium ===
+
+The generated iso image will work for CD, DVD and USB key just fine. For CD or DVD, use your favorite burning software. For USB key, use dd. Recommended command for dd: dd if=path-to-image.iso of=/dev/your-usb-device bs=8M. Obligatory warning: dd can wreck the contents of a harddisk, use with care and doublecheck the device you are writing to. 
+
+THE FOLLOWING IS NOT TRUE
+=== Persistent home ===
+
+To make the home on your USB key persistent, simply create a second partition of type VFAT (format 32 recommended) on the USB key after dd'ing the iso image onto it. Its label has to be LGLIVE_HOME or it won't work. This is all you have to do for the persistent home.

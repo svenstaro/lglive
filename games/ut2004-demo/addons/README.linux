@@ -1,0 +1,295 @@
+
+
+This is the GNU/Linux client and dedicated server for
+ the Unreal Tournament 2004 demo, version 3334.
+
+
+BLATANT ADVERTISEMENT:
+  If you like the demo, try the full game! UT2004 Editors' Choice Edition
+  is on sale wherever fine games are sold. The full Linux version (x86 and
+  amd64!) is on the retail disc.
+
+
+AMD64 vs x86:
+  If you install this on a 64-bit version of GNU/Linux, then you'll get the
+  64-bit binaries. Otherwise, you'll get the 32-bit ones. You won't get the
+  64-bit version unless you've got an amd64-compatible chip and are running
+  a 64-bit OS on that chip. If you don't know, then you're on a 32-bit
+  platform.
+
+  Please note that the amd64 binaries are considered experimental at this
+  time, as is the entire amd64 Linux system at the time of this writing.
+  We accept bug reports for them and strive to fix them, but we don't promise
+  stellar performance or stability. You have been warned.
+
+  The rest of this file applies to both builds unless explicitly noted.
+
+
+INSTALLATION:
+  Run the installer. You're probably already doing that if you're
+  reading this file.
+
+
+UNINSTALLATION:
+  There is an "uninstall" script in the directory where you installed the
+  game. Run that as the same user that installed the game, and it should
+  remove all traces of itself.
+
+  Please note that personal game files (configs, screenshots, etc) are
+  written to the player's homedir ("$HOME/.ut2004"). These files are not
+  removed by the uninstaller, but can be safely deleted at your
+  discretion.
+
+
+BUG REPORTS:
+  Bug reports go to https://bugzilla.icculus.org/
+
+
+
+COMMUNITY:
+  There is a mailing list for discussion. Send a blank email to
+  ut2004-subscribe@icculus.org to get on the list.
+
+  DO NOT REPORT LINUX BUGS TO THE MAILING LIST
+   Bug reports go to https://bugzilla.icculus.org/
+
+  Please refer to the Linux Gamers' FAQ for common solutions
+   to help you run UT2004 on Linux:
+     http://icculus.org/lgfaq/
+
+
+SOME INITIAL FAQS:
+  Q: Where do I report bugs?
+  A: https://bugzilla.icculus.org/
+
+      There is also a mailing list for discussion of ut2004 on
+      non-Windows platforms, but bugs that are not in the bugtracking
+      system will likely be ignored. We just don't have time to monitor
+      mailing lists for things we should be fixing when there's a nice
+      user interface to help us keep track of this. You Have Been Warned.
+
+  Q: So what about this mailing list?
+  A: Send a blank email to ut2004-subscribe@icculus.org to get on the
+     list. You must be subscribed to post, as an anti-spam (and
+     anti-rudeness) precaution. Unsubscribe instructions are sent to you.
+     This list is for discussion, not bug reporting.
+
+  Q: I have a AMD K6 processor...can I play the game?
+  A: No. These CPUs lack instructions the physics code needs. This is
+     true for both the client and server. This will NOT change. Please
+     upgrade if you want to play.
+
+  Q: How do I join a game from the pull-down console?
+  A: "open hostname.of.game.server.com:portnum"
+
+  Q: How do I take a screenshot in-game?
+  A: F9, by default. It writes to $HOME/.ut2004/ScreenShots/ by default.
+
+  Q: How do I switch between fullscreen and windowed mode?
+  A: You can change this in the Video settings menu, or the .INI file,
+     but the quickest way is to just hit ALT-Enter. CTRL-G will grab
+     and ungrab mouse input if you need to get at a different window.
+
+  Q: I want to run a dedicated server, but have no idea where to start.
+     Any pointers for me?
+  A: There is an excellent collection of articles at:
+     http://www.unrealadmin.org/
+
+  Q: Any generic help for Linux gaming and ut2004 on Linux?
+  A: More ut2004 FAQs and generic Linux game resources at the LGFAQ:
+     http://icculus.org/lgfaq/
+
+  Q: I get the following text on my console when I run the game:
+      Xlib: extension "XiG-SUNDRY-NONSTANDARD" missing on display ":0.0".
+     Is this a problem?
+  A: No. This means you aren't using an X server from Xi Graphics.
+     That message means we're looking for the X11 extension they use to
+     change screen resolutions, and having a non-XiG X server, you
+     don't have it. THIS IS NOT A UT2004 BUG. It's not a bug at all.
+     Xlib prints that "error", but we handle it gracefully.
+
+  Q: I click the "view stats" button in the menus, and either the wrong
+     (that is, not my favorite) browser pops up, or no web browser at
+     all appears.
+  A: export the BROWSER environment variable before starting ut2004:
+       export BROWSER="mozilla"
+     See http://www.tuxedo.org/~esr/BROWSER/ for more info.
+
+  Q: Quake 3 Arena works fine, but video is slow/corrupted in ut2004!
+  A: Quake 3 Arena is a completely different codebase. UT2004 pushes your
+     video hardware much, much more, and as such, tends to expose
+     driver and hardware issues. Please contact your vendor for more
+     information on compatibility between ut2004/Linux and their
+     products.
+
+  Q: I have a PCI video card, and the game loads, but it's slow. I'm
+     definitely not using software Mesa, either.
+  A: You need AGP support for this game to be generally playable. Sorry.
+
+  Q: I have a GeForce892 and it's slow. I'm not using NVAGP or AGPGART.
+  A: See above. The game might run, BUT IT WILL BE VERY VERY SLOW
+     WITHOUT AGP TRANSFERS. There is nothing to do about this. If we
+     can't pass vertex data over AGP, the fallback is slow. Very slow.
+
+     If you see the following text in your log file (which should be
+     $HOME/.ut2004/System/UT2004.log):
+
+        WARNING: Couldn't allocate AGP memory - turning off support for GL_NV_vertex_array_range
+        WARNING: This has a serious impact on performance.
+
+     ...then you don't have AGP support. Enable AGP and/or get
+     hardware that will let you enable AGP. If you SHOULD have it,
+     then you're system is either misconfigured, or your drivers are
+     buggy.
+
+  Q: But the game will work with AGPGART, right?
+  A: Yes. NvAgp and AGPGART should both work with the Nvidia drivers.
+
+  Q: I am using the ALSA drivers; are they supported?
+  A: Yes, this game works with ALSA directly (and doesn't require the
+     OSS emulation layer).
+
+  Q: I made changes to UT2004.ini and User.ini in the game's System
+     directory, but they aren't showing up when I run the game.
+  A: UT2004, like the original UT, writes to your homedir, and not the
+     game directory. Look in $HOME/.ut2004/System, where it should have
+     written out, on your first run, a UT2004.ini and User.ini based on
+     the game's Default.ini file. If this file exists, it is used instead
+     of one in the game's System dir. So edit that one, instead.
+     Screenshots and other files to be written will also go to your
+     homedir.
+
+     If you really hate this, you can have all reading and writing be
+     done to the game's System dir instead: specify -nohomedir on the
+     command line. Please make sure you've got write access to the
+     installation directories if you do this.
+
+     The game's menu interface is frequently a more user friendly way to
+     do the common things. You should only need to get down and dirty in
+     the .INI files if you want to do uncommon things (see next
+     question) or you want to run a dedicated server exclusively.
+
+  Q: I want to use a joystick, and it isn't working!
+  A: Set "UseJoystick=True" in the [SDLDrv.SDLClient] section of your
+     UT2004.ini file. (Make sure you do this in SDLDrv and not WinDrv or
+     something else!) You'll need to configure the axes in the User.ini
+     file. Joystick buttons and hats look like keypresses to the Unreal
+     engine now, so those can be configured via the menus once you set
+     UseJoystick. If you've got more than one joystick plugged in and
+     recognized by SDL, you might need to set "JoystickNumber" to
+     something other than "0"...check $HOME/.ut2004/System/UT2004.log for
+     a list of what joystick is being assigned to what number. If you've
+     got more than one hat switch, you can only use one (sorry): set
+     "JoystickHatNumber" in the .ini file. If the log says it detected
+     zero joysticks, it means it; please make sure you've got the correct
+     /dev entries and kernel modules set up.
+
+  Q: I have a 16 or more buttons on my joystick (!), but the log says I
+     can only use 12!
+  A: If you've got a hatswitch on your stick, set "IgnoreHat=True" in the
+     [SDLDrv.SDLClient] section of your UT2004.ini file. This gives you
+     four extra buttons, but you'll lose the use of your hat switch. (You
+     can also modify SDL via environment variables and/or source hacking
+     to make your controls be represented differently to the engine. Do
+     some research if you want to try this approach). This is due to the
+     fact that the Unreal Engine has 16 "keys" set aside for joystick
+     buttons/hat switches. Really creative people could hack SDL to send
+     keyevents on unused keys if you've got WAY too many joystick
+     buttons. Patches to SDL are accepted.  :)
+
+  Q: How do I run a server without X11, OpenGL, or graphics at all?
+  A: Quick start:
+
+       cd /where/i/installed/ut2004/System ; ./ucc server DOM-SunTemple
+
+       "DOM-SunTemple" can be replaced with any other map in the "Maps"
+       directory. There's like a million different options you specify on
+       the command line; go find a dedicated server tutorial on the net.
+       Many of the options have the same syntax as the original Unreal
+       Tournament.
+
+       "ucc" does not link against SDL or OpenAL, so you should be able
+       to run it in a console, under "screen", on a rackmount, over ssh,
+       or anywhere else that you can't see pretty graphics or hear bots
+       calling you a camper.
+
+  Q: What about FreeBSD?
+  A: Both the client and dedicated server are known to work under FreeBSD
+     with the Linux binary support layer. If they don't, we consider this
+     a bug.
+
+  Q: Can you port the server/client to Sparc/MIPS/Alpha/ARM/my toaster?
+  A: This would require time, money, and permission from Epic. Not to
+     mention 3D drivers if you want the client. Nothing is impossible,
+     but the likelihood is low. Please don't send me any signed
+     petitions, either.
+
+  Q: Can I get a port to BeOS/AtheOS/OS2 Warp/Windows for Workgroups 3.0?
+  A: See last question.
+
+  Q: What's the minimum system I need to play this on?
+  A: I wouldn't want to play on less than, say, an 800MHz Pentium III with
+     256 megs of RAM.
+
+     The game is largely single threaded, but Ogg Vorbis decoding is
+     done in a separate thread, and OpenAL mixes in another thread, which
+     means you can get a speed boost from an SMP box (currently, this is
+     noticable: run the game with -nosound for a framerate boost on a
+     Uniprocessor box to see what I mean. OpenAL and Ogg Vorbis
+     optimization patches are VERY welcome). Generally, you should put
+     more CPU and (more importantly) more graphics hardware in
+     your box. The absolute low-end is probably a 600 MHz CPU and a
+     GeForce 1 with the detail and resolution turned _all_ the way down
+     (and I wouldn't call that a good gaming experience). Reports of
+     success and failure, and specific benchmarks, are more than welcome.
+
+  Q: Does this run faster/slower on Windows/Linux?
+  A: The speeds are comparable. I haven't done actual benchmarks, as it's
+     another Apple/Orange comparison. Kernels, drivers, Direct3D/OpenGL
+     versions make this a largely debatable field anyhow. Run the game on
+     the platform that works best for you: that's why we ported the game,
+     after all.
+
+  Q: I have more questions!
+  A: Ask on the mailing list (see above). Do not report bugs to the
+     mailing list if you are expecting a fix. Did I mention that already?
+
+  Q: So, wait, where can I report bugs, again?
+  A: https://bugzilla.icculus.org/
+
+  Q: Who are you?
+  A: My name's Ryan.
+
+
+
+THANKS:
+
+Special thanks go out to several people that helped make
+ UT2004 on Linux a reality:
+
+ - Zephaniah E. Hull, who agressively improved OpenAL's
+   ALSA support for this game.
+ - Daniel Ceregatti for bandwidth and other aid.
+ - Andy Mecham for driver and mobo troubleshooting.
+ - Joe Valenzuela for OpenAL hackery.
+ - Zachary Slater for UT2004 updates to the Linux Gamers'
+   FAQ (http://icculus.org/lgfaq/)
+ - Sam Lantinga (and others!) for multiple SDL fixes.
+ - Elias Slater, Connie Siu, Mike Wall, and Ken Schutt
+   for keeping us loaded with Opterons.
+ - Kristopher Kersey, Brad House, Daniel Robbins,
+   Chris Gianelloni, and several other Gentoo maintainers
+   for getting the demo into portage and onto LiveCDs.
+ - Ludwig Nussel for covering the SuSE angle.
+ - Daniel Vogel for tons of OpenGL fixes and advice.
+ - Stephane Peter for loki_setup stuff.
+ - All the mirror sites that jumped to carry the load.
+ - Mike Boyle, for battling ninjas.
+ - Greg Read, for the original loki_setup cdkey entry code.
+ - Mark Rein and Tim Sweeney for Doing the Right Thing.
+ - Others I've forgotten under the pressure of writing this
+   down. You are still appreciated!
+
+--ryan.
+
+

@@ -1,0 +1,63 @@
+Global {
+
+    edge = bottom
+    allign = left
+    margin = 0
+    widthtype = percent
+    width = 100
+    heighttype = pixel
+    height = 48
+    roundcorners = false
+    Transparent = true
+    TintColor = grey
+    Alpha = 50
+
+}
+Plugin {
+    type = menu
+    config {
+        image = /usr/share/fbpanel/images/star.png
+        item {
+            icon = nothing
+            name = Xterm
+            action = xterm
+        }
+        item {
+            icon = nothing
+            name = Save to USB Stick
+            action = sudo xterm -e usb-write
+        }
+        item {
+            icon = nothing
+            name = Load from USB Stick
+            action = sudo xterm -e usb-read
+        }
+        item {
+            icon = nothing
+            name = Change Monitor Resolution
+            action = sudo xterm -e setxres
+        }
+        separator{
+        }
+        item {
+            icon = nothing
+            name = Poweroff
+            action = sudo shutdown -h now
+        }
+    }
+}
+
+
+
+Plugin {
+        type = space
+        config {
+                size = 2
+        }
+}
+
+
+Plugin {
+    type = launchbar
+    config {
+

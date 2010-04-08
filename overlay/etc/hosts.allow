@@ -1,0 +1,4 @@
+nfsd: ALL
+rpcbind: ALL
+mountd:ALL
+
