@@ -11,6 +11,8 @@
 # this might work but we don't use it because we're doing it completely manually
 #useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk -d /home/gamer gamer
 
+chmod 0440 /etc/sudoers
+
 # Prepare xchat with a random name
 # the following is _very_ ugly and probably shouldn't be done in this place
 sed -e "/irc_nick1 /circ_nick1\ \=\ gamer$RANDOM" \
