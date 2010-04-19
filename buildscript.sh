@@ -30,7 +30,8 @@ NAME="lglive"
 # Version will be appended to the ISO.
 VER="0.9.6"
 # Kernel version. We'll need this.
-KVER="2.6.31-ARCH"
+KVER="$(grep ^ALL_kver /etc/mkinitcpio.d/kernel26.kver | cut -d= -f2 | sed s/\'//g)"
+#KVER="2.6.33"
 # Architecture will also be appended to the ISO name.
 ARCH="i686"
 #ARCH="`uname -m`" # we can't build x86_64 just yet! :(
@@ -94,28 +95,30 @@ overlay ()
 	mv -f `ls nvidia-*.tar.*|grep utils|grep -v 173xx|grep -v 96xx` nvidia-utils-recent
 	rm *.tar.* &> /dev/null
 
-	[ ! ${QUIET} == "y" ] && echo "overlay: Making ATI driver package"
-	#cp -r /usr/src/linux-${KVER} ${BASEDIR}/${WORKDIR}/root-image/usr/src/
-	cd ${BASEDIR}/${WORKDIR}/root-image/tmp/ 
-	wget -q http://aur.archlinux.org/packages/catalyst/catalyst.tar.* 
-	tar xzf catalyst.tar.* && rm catalyst.tar.*
-	cd catalyst && [ ${VERBOSE} == "y" ] && makepkg --asroot --nobuild || makepkg --asroot --nobuild &> /dev/null
-	cd ../../../../
-	echo 'cd /tmp/
-	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while getting ATI driver packages\e[00m" && exit 1
-	cd catalyst && makepkg -dfc --asroot > /dev/null
-	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while making ATI driver packages\e[00m" && exit 1
-	pacman -Rsnu --noconfirm base-devel &>/dev/null' >> ${BASEDIR}/${WORKDIR}/root-image/atiscript.sh
-  if [ ${VERBOSE} == "y" ]; then
-    chroot ${BASEDIR}/${WORKDIR}/root-image bash atiscript.sh || return 1   
-  else
-    chroot ${BASEDIR}/${WORKDIR}/root-image bash atiscript.sh &> /dev/null || return 1   
-  fi
-  mv ${BASEDIR}/${WORKDIR}/root-image/tmp/catalyst/catalyst-*.tar.* . && rm -r ${BASEDIR}/${WORKDIR}/root-image/tmp/catalyst && rm ${BASEDIR}/${WORKDIR}/root-image/atiscript.sh
-
-	#rm -r ${BASEDIR}/${WORKDIR}/root-image/usr/src/linux-${KVER}
-	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while making ATI driver packages\e[00m" && exit 1
-	mv -f `ls catalyst-*.tar.*|grep -v utils` catalyst-recent && mv catalyst-recent overlay/opt/drivers 
+	# NO ATI FOR NOW BECAUSE NO COMPATIBLE DRIVER IS AVAILABLE
+	# to reenable, put "base-devel" into packages.list again!
+#	[ ! ${QUIET} == "y" ] && echo "overlay: Making ATI driver package"
+#	#cp -r /usr/src/linux-${KVER} ${BASEDIR}/${WORKDIR}/root-image/usr/src/
+#	cd ${BASEDIR}/${WORKDIR}/root-image/tmp/ 
+#	wget -q http://aur.archlinux.org/packages/catalyst/catalyst.tar.gz
+#	tar xzf catalyst.tar.gz && rm catalyst.tar.gz
+#	cd catalyst && [ ${VERBOSE} == "y" ] && makepkg --asroot --nobuild || makepkg --asroot --nobuild &> /dev/null
+#	cd ../../../../
+#	echo 'cd /tmp/
+#	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while getting ATI driver packages\e[00m" && exit 1
+#	cd catalyst && makepkg -dfc --asroot > /dev/null
+#	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while making ATI driver packages\e[00m" && exit 1
+#	pacman -Rsnu --noconfirm base-devel &>/dev/null' >> ${BASEDIR}/${WORKDIR}/root-image/atiscript.sh
+#  if [ ${VERBOSE} == "y" ]; then
+#    chroot ${BASEDIR}/${WORKDIR}/root-image bash atiscript.sh || return 1   
+#  else
+#    chroot ${BASEDIR}/${WORKDIR}/root-image bash atiscript.sh &> /dev/null || return 1   
+#  fi
+#  mv ${BASEDIR}/${WORKDIR}/root-image/tmp/catalyst/catalyst-*.tar.* . && rm -r ${BASEDIR}/${WORKDIR}/root-image/tmp/catalyst && rm ${BASEDIR}/${WORKDIR}/root-image/atiscript.sh
+#
+#	#rm -r ${BASEDIR}/${WORKDIR}/root-image/usr/src/linux-${KVER}
+#	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while making ATI driver packages\e[00m" && exit 1
+#	mv -f `ls catalyst-*.tar.*|grep -v utils` catalyst-recent && mv catalyst-recent overlay/opt/drivers 
 
 	[ ! ${QUIET} == "y" ] && echo "overlay: Finished preparing driver packages"
 
@@ -128,16 +131,16 @@ overlay ()
     cp -f  "${BASEDIR}"/gamelist_{lite,big} "${BASEDIR}"/"${WORKDIR}"/overlay/
   fi
   if [ ${VERBOSE} == "y" ]; then
-    pacman -Sy --config pacman.conf --dbpath "${BASEDIR}"/"${WORKDIR}"/root-image/var/lib/pacman || return 1
+    pacman -Sy --config ${BASEDIR}/pacman.conf --dbpath "${BASEDIR}"/"${WORKDIR}"/root-image/var/lib/pacman || return 1
   else 
-    pacman -Sy --config pacman.conf --dbpath "${BASEDIR}"/"${WORKDIR}"/root-image/var/lib/pacman &> /dev/null || return 1
+    pacman -Sy --config ${BASEDIR}/pacman.conf --dbpath "${BASEDIR}"/"${WORKDIR}"/root-image/var/lib/pacman &> /dev/null || return 1
   fi
 	while read game; do
 		[ ! ${QUIET} == "y" ] && echo "overlay: Installing ${game}"
     if [ ${VERBOSE} == "y" ]; then
-      pacman -S --config pacman.conf --noconfirm --root "${BASEDIR}/${WORKDIR}/overlay/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" ${game} || return 1
+      pacman -S --config ${BASEDIR}/pacman.conf --noconfirm --root "${BASEDIR}/${WORKDIR}/overlay/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" ${game} || return 1
     else
-      pacman -S --config pacman.conf --noconfirm --root "${BASEDIR}/${WORKDIR}/overlay/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" ${game} &> /dev/null || return 1
+      pacman -S --config ${BASEDIR}/pacman.conf --noconfirm --root "${BASEDIR}/${WORKDIR}/overlay/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" ${game} &> /dev/null || return 1
     fi
 		cp -rp "${BASEDIR}/games/${game}" "${BASEDIR}/${WORKDIR}/overlay/opt/games/" || return 1
 	done < "${BASEDIR}/${gamelist}"
@@ -162,17 +165,22 @@ base-iso ()
 	[ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting because no isomounts file was found\e[00m" && exit 1
 	sed -i "s|@ARCH@|${ARCH}|g" "${WORKDIR}/isomounts"
 	[ ! ${QUIET} == "y" ] && echo "base-iso: Making initrd image"
-	git clone git://projects.archlinux.org/archiso.git archiso-temp &>/dev/null
-	cp -r archiso-temp/archiso/{hooks,install} ${BASEDIR}/${WORKDIR}/root-image/lib/initcpio/
+	git clone git://projects.archlinux.org/archiso.git archiso-temp &>/dev/null || return 1
+	cp -r archiso-temp/archiso/{hooks,install} ${BASEDIR}/${WORKDIR}/root-image/lib/initcpio/ || return 1
   # TODO: Hacky workaround until klibc-utils fstype supports udf
-  sed '/if mount -r -t "${_FSTYPE}" \/dev\/archiso \/bootmnt >\/dev\/null 2>&1; then/c\if mount -r -t udf \/dev\/archiso \/bootmnt >\/dev\/null 2>&1; then' -i ${BASEDIR}/${WORKDIR}/root-image/lib/initcpio/hooks/archiso || return 1
+  #sed '/if mount -r -t "${_FSTYPE}" \/dev\/archiso \/bootmnt >\/dev\/null 2>&1; then/c\if mount -r -t udf \/dev\/archiso \/bootmnt >\/dev\/null 2>&1; then' -i ${BASEDIR}/${WORKDIR}/root-image/lib/initcpio/hooks/archiso || return 1
 	rm -r archiso-temp
-	cp ${BASEDIR}/mkinitcpio.conf ${BASEDIR}/${WORKDIR}/root-image/etc/mkinitcpio.conf
-	cp ${BASEDIR}/mkinitcpio-lanboot.conf ${BASEDIR}/${WORKDIR}/root-image/etc/mkinitcpio-lanboot.conf
-	chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio.conf -k ${KVER} -g "/lglive.img" &>/dev/null
-	mv ${BASEDIR}/${WORKDIR}/root-image/lglive.img "${BASEDIR}/${WORKDIR}/iso/boot/lglive.img" &>/dev/null
-	chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio-lanboot.conf -k ${KVER} -g "/lglivelanboot.img" &>/dev/null
-	mv ${BASEDIR}/${WORKDIR}/root-image/lglivelanboot.img "${BASEDIR}/${WORKDIR}/iso/boot/lglivelanboot.img" &>/dev/null
+	cp ${BASEDIR}/mkinitcpio.conf ${BASEDIR}/${WORKDIR}/root-image/etc/mkinitcpio.conf || return 1
+	cp ${BASEDIR}/mkinitcpio-lanboot.conf ${BASEDIR}/${WORKDIR}/root-image/etc/mkinitcpio-lanboot.conf || return 1
+	if [ ${VERBOSE} == "y" ]; then
+		chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio.conf -k ${KVER} -g "/lglive.img" || return 1
+		chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio-lanboot.conf -k ${KVER} -g "/lglivelanboot.img" || return 1
+	else
+		chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio.conf -k ${KVER} -g "/lglive.img" &>/dev/null || return 1
+		chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio-lanboot.conf -k ${KVER} -g "/lglivelanboot.img" &>/dev/null || return 1
+	fi
+	mv ${BASEDIR}/${WORKDIR}/root-image/lglive.img "${BASEDIR}/${WORKDIR}/iso/boot/lglive.img" &>/dev/null ||return 1
+	mv ${BASEDIR}/${WORKDIR}/root-image/lglivelanboot.img "${BASEDIR}/${WORKDIR}/iso/boot/lglivelanboot.img" &>/dev/null || return 1
   sed -i "s/^CacheDir/\#CacheDir/" "${BASEDIR}/${WORKDIR}/root-image/etc/pacman.conf"
   sed -i "/localrepo/,+2d" "${BASEDIR}/${WORKDIR}/root-image/etc/pacman.conf"
 	[ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting due to error while running mkinitcpio\e[00m" && exit 1
@@ -250,7 +258,6 @@ build ()
   else 
     mkarchiso -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}" &> /dev/null
   fi
-	[ ! ${QUIET} == "y" ] && [ ${BOOTLOADER} == "syslinux" ] && echo "build: Making isohybrid" && isohybrid -offset 1 "${FULLNAME}-${edition}.${imagetype}" && echo "build: Made isohybrid" || return 1
 	[ "$?" -ne 0 ] && echo -e "\e[01;31mbuild: Exiting due to error while running mkarchiso\e[00m" && exit 1
 	[ ! ${QUIET} == "y" ] && echo "===== Finished building final image for target: ${TARGET} ====="
   return 0
