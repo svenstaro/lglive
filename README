@@ -11,7 +11,6 @@ You need the following for now:
 * archiso-git installed from AUR
 * squashfs-tools
 * aufs2-util
-* grub
 * syslinux
 * cdrtools from AUR (cdrkit mostly works too)
 * devtools from [extra]
