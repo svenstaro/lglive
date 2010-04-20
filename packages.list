@@ -6,7 +6,6 @@ arora
 aufs2
 aufs2-util
 b43-fwcutter
-base
 bash
 bin86
 blackbox
@@ -73,8 +72,10 @@ madwifi
 madwifi-utils
 memtest86+
 mkinitcpio
+mkinitcpio-nfs-utils
 module-init-tools
 nano
+nbd
 ncurses
 ndiswrapper
 ndiswrapper-utils

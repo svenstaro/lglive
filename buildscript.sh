@@ -171,16 +171,12 @@ base-iso ()
   #sed '/if mount -r -t "${_FSTYPE}" \/dev\/archiso \/bootmnt >\/dev\/null 2>&1; then/c\if mount -r -t udf \/dev\/archiso \/bootmnt >\/dev\/null 2>&1; then' -i ${BASEDIR}/${WORKDIR}/root-image/lib/initcpio/hooks/archiso || return 1
 	rm -r archiso-temp
 	cp ${BASEDIR}/mkinitcpio.conf ${BASEDIR}/${WORKDIR}/root-image/etc/mkinitcpio.conf || return 1
-	cp ${BASEDIR}/mkinitcpio-lanboot.conf ${BASEDIR}/${WORKDIR}/root-image/etc/mkinitcpio-lanboot.conf || return 1
 	if [ ${VERBOSE} == "y" ]; then
 		chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio.conf -k ${KVER} -g "/lglive.img" || return 1
-		chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio-lanboot.conf -k ${KVER} -g "/lglivelanboot.img" || return 1
 	else
 		chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio.conf -k ${KVER} -g "/lglive.img" &>/dev/null || return 1
-		chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio-lanboot.conf -k ${KVER} -g "/lglivelanboot.img" &>/dev/null || return 1
 	fi
 	mv ${BASEDIR}/${WORKDIR}/root-image/lglive.img "${BASEDIR}/${WORKDIR}/iso/boot/lglive.img" &>/dev/null ||return 1
-	mv ${BASEDIR}/${WORKDIR}/root-image/lglivelanboot.img "${BASEDIR}/${WORKDIR}/iso/boot/lglivelanboot.img" &>/dev/null || return 1
   sed -i "s/^CacheDir/\#CacheDir/" "${BASEDIR}/${WORKDIR}/root-image/etc/pacman.conf"
   sed -i "/localrepo/,+2d" "${BASEDIR}/${WORKDIR}/root-image/etc/pacman.conf"
 	[ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting due to error while running mkinitcpio\e[00m" && exit 1
@@ -219,7 +215,7 @@ bootloader ()
 		cp "${WORKDIR}/root-image/usr/lib/syslinux/isolinux.bin" "${WORKDIR}/iso/boot/isolinux" || return 1
 		cp "${WORKDIR}/root-image/usr/lib/syslinux/pxelinux.0" "${WORKDIR}/iso/boot/" || return 1
     cp "${WORKDIR}/root-image/usr/lib/syslinux/"*.c32 "${WORKDIR}/iso/boot/isolinux/" || return 1
-		sed "s|archisolabel=[^ ]*|archisolabel=${NAME}-${VER//./}|" -i ${WORKDIR}/iso/boot/pxelinux.cfg/default || return 1
+		#sed "s|archisolabel=[^ ]*|archisolabel=${NAME}-${VER//./}|" -i ${WORKDIR}/iso/boot/pxelinux.cfg/default || return 1
 		[ "$?" -ne 0 ] && echo -e "\e[01;31mbootloader Exiting due to error while copying bootloader\e[00m" && exit 1
 	fi
 	[ ! ${QUIET} == "y" ] && echo "===== Finished bootloader ====="

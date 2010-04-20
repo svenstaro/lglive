@@ -38,19 +38,19 @@ copy_files()
 		mkdir -p $TFTPBOOT/boot/x86_64
 		mkdir -p $TFTPBOOT/pxelinux.cfg
 		[ -f $BOOT/vmlinuz26 ] && cp $BOOT/vmlinuz26 $TFTPBOOT/boot
-		[ -f $BOOT/archiso.img ] && cp $BOOT/archiso.img $TFTPBOOT/boot
+		[ -f $BOOT/lglive.img ] && cp $BOOT/lglive.img $TFTPBOOT/boot
 		[ -f $BOOT/i686/vmlinuz26 ] && cp $BOOT/i686/vmlinuz26 $TFTPBOOT/boot/i686
-		[ -f $BOOT/i686/archiso.img ] && cp $BOOT/i686/archiso.img $TFTPBOOT/boot/i686
+		[ -f $BOOT/i686/lglive.img ] && cp $BOOT/i686/lglive.img $TFTPBOOT/boot/i686
 		[ -f $BOOT/x86_64/vmlinuz26 ] && cp $BOOT/x86_64/vmlinuz26 $TFTPBOOT/boot/x86_64
-		[ -f $BOOT/x86_64/archiso.img ] && cp $BOOT/x86_64/archiso.img $TFTPBOOT/boot/x86_64
-		cp $BOOT/memtest $TFTPBOOT/boot
+		[ -f $BOOT/x86_64/lglive.img ] && cp $BOOT/x86_64/lglive.img $TFTPBOOT/boot/x86_64
+		cp $BOOT/memtest86 $TFTPBOOT/boot
 		cp $BOOT/x86test $TFTPBOOT/boot
 		cp $BOOT/splash.png $TFTPBOOT/boot
-		cp $BOOT/isolinux/pxelinux.0 $TFTPBOOT
+		cp $BOOT/pxelinux.0 $TFTPBOOT
 		cp $BOOT/isolinux/chain.c32 $TFTPBOOT
 		cp $BOOT/isolinux/reboot.c32 $TFTPBOOT
 		cp $BOOT/isolinux/vesamenu.c32 $TFTPBOOT
-		sed 's|IPAPPEND 0|IPAPPEND 3|g' \
+		sed '/APPEND/ s/$/ ip=dhcp/' \
 		$BOOT/isolinux/isolinux.cfg > \
 		$TFTPBOOT/pxelinux.cfg/default
 	fi
@@ -58,6 +58,7 @@ copy_files()
 
 start_pxe_server()
 {
+	pkill dnsmasq &> /dev/null
 	dnsmasq \
 	--enable-tftp \
 	--tftp-root=$TFTPBOOT \
@@ -67,6 +68,7 @@ start_pxe_server()
 
 start_nbd_server()
 {
+	pkill nbd-server &> /dev/null
 	nbd-server 9040 ${ISO} -r
 }
 
