@@ -87,12 +87,12 @@ overlay ()
     pacman -Syw --config ${BASEDIR}/pacman.conf --cachedir `pwd` --noconfirm nvidia nvidia-utils nvidia-173xx nvidia-173xx-utils nvidia-96xx nvidia-96xx-utils &> /dev/null
   fi
   [ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while getting NVIDIA driver packages\e[00m" && exit 1
-	mv -f `ls nvidia-173xx*.tar.*|grep -v utils` nvidia-legacy 
-	mv -f `ls nvidia-173xx*.tar.*|grep utils` nvidia-legacy-utils
-	mv -f `ls nvidia-96xx*.tar.*|grep -v utils` nvidia-prelegacy 
-	mv -f `ls nvidia-96xx*.tar.*|grep utils` nvidia-prelegacy-utils 
-	mv -f `ls nvidia-*.tar.*|grep -v utils|grep -v 173xx|grep -v 96xx` nvidia-recent
-	mv -f `ls nvidia-*.tar.*|grep utils|grep -v 173xx|grep -v 96xx` nvidia-utils-recent
+	mv -f `ls nvidia-173xx*.tar.*|grep -v utils` nvidia-legacy.tar.xz
+	mv -f `ls nvidia-173xx*.tar.*|grep utils` nvidia-legacy-utils.tar.xz
+	mv -f `ls nvidia-96xx*.tar.*|grep -v utils` nvidia-prelegacy.tar.xz
+	mv -f `ls nvidia-96xx*.tar.*|grep utils` nvidia-prelegacy-utils.tar.xz
+	mv -f `ls nvidia-*.tar.*|grep -v utils|grep -v 173xx|grep -v 96xx` nvidia-recent.tar.xz
+	mv -f `ls nvidia-*.tar.*|grep utils|grep -v 173xx|grep -v 96xx` nvidia-recent-utils.tar.xz
 	rm *.tar.* &> /dev/null
 
 	# NO ATI FOR NOW BECAUSE NO COMPATIBLE DRIVER IS AVAILABLE

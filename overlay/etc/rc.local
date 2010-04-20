@@ -16,47 +16,47 @@ chmod 0440 /etc/sudoers
 # Prepare xchat with a random name
 # the following is _very_ ugly and probably shouldn't be done in this place
 sed -e "/irc_nick1 /circ_nick1\ \=\ gamer$RANDOM" \
-	-e "/irc_nick2 /circ_nick2\ \=\ gamer$RANDOM" \
-	-e "/irc_nick3 /circ_nick3\ \=\ gamer$RANDOM" \
-	-e "/irc_user_name /circ_user_name\ \=\ gamer$RANDOM" \
-	< /etc/skel/.xchat2/xchat.conf > /tmp/xchat.conf.new
+  -e "/irc_nick2 /circ_nick2\ \=\ gamer$RANDOM" \
+  -e "/irc_nick3 /circ_nick3\ \=\ gamer$RANDOM" \
+  -e "/irc_user_name /circ_user_name\ \=\ gamer$RANDOM" \
+  < /etc/skel/.xchat2/xchat.conf > /tmp/xchat.conf.new
 mv /tmp/xchat.conf.new /etc/skel/.xchat2/xchat.conf
 
 # Check for existence of persistent home
 if [[ `blkid|grep -o LGLIVE_HOME` ]]; then
-	dialog --nocancel --menu "A persistent home for lglive has been detected on your medium. Do you want to make use of this home or use a default, non-persistent one?:" 15 72 15 "persistent" "Use persistent home" "default" "Use default home" 2>./temp_home
-	result=`cat ./temp_home`
-	if [[ "$result" == "persistent" ]]; then
-		mkdir -p /home/gamer
-		mount -L LGLIVE_HOME /home/gamer
-		chown -R gamer:gamer /home/gamer
-		if [[ ! -f "/home/gamer/.xinitrc" ]]; then
-			su -c "cp -r /etc/skel/.[a-zA-Z0-9]* /home/gamer/" gamer
-		fi
-	fi
+  dialog --nocancel --menu "A persistent home for lglive has been detected on your medium. Do you want to make use of this home or use a default, non-persistent one?:" 15 72 15 "persistent" "Use persistent home" "default" "Use default home" 2>./temp_home
+  result=`cat ./temp_home`
+  if [[ "$result" == "persistent" ]]; then
+    mkdir -p /home/gamer
+    mount -L LGLIVE_HOME /home/gamer
+    chown -R gamer:gamer /home/gamer
+    if [[ ! -f "/home/gamer/.xinitrc" ]]; then
+      su -c "cp -r /etc/skel/.[a-zA-Z0-9]* /home/gamer/" gamer
+    fi
+  fi
 fi
 
 # Create user directory for live session
 if [ ! -d /home/gamer ]; then 
-	mkdir /home/gamer && chown gamer:gamer /home/gamer
-	su -c "cp -r /etc/skel/.[a-zA-Z0-9]* /home/gamer/" gamer
+  mkdir /home/gamer && chown gamer:gamer /home/gamer
+  su -c "cp -r /etc/skel/.[a-zA-Z0-9]* /home/gamer/" gamer
 fi
 
 # Check for multiple sound cards
 if [[ `cat /proc/asound/cards|wc -l` -gt 2 ]]; then
-	x=`cat /proc/asound/cards|wc -l`
-	let x=(x/2)
-	cat /proc/asound/cards|grep "^ [[:digit:]]" > ./temp_sound
-	snddevs=""
-	while [[ $x -gt 0 ]]; do
-		snddevs+="`cat ./temp_sound|grep -om1 "^ [[:digit:]]"`"
-		snddevs+=" `cat ./temp_sound|grep -om1 ":.*"|sed -e 's/: //' -e 's/ /_/g'`"
-		sed 1d -i ./temp_sound
-		let x--
-	done
-	dialog --nocancel --menu "Multiple sound devices have been detected in your system. You need to choose a default sound card for audio output." 15 72 15 ${snddevs} 2>./temp_snd
-	tmpdev=`cat ./temp_snd`
-	echo -e "pcm.!default { type hw\ncard ${tmpdev} }\nctl.!default { type hw\ncard ${tmpdev} }" > /etc/asound.conf
+  x=`cat /proc/asound/cards|wc -l`
+  let x=(x/2)
+  cat /proc/asound/cards|grep "^ [[:digit:]]" > ./temp_sound
+  snddevs=""
+  while [[ $x -gt 0 ]]; do
+    snddevs+="`cat ./temp_sound|grep -om1 "^ [[:digit:]]"`"
+    snddevs+=" `cat ./temp_sound|grep -om1 ":.*"|sed -e 's/: //' -e 's/ /_/g'`"
+    sed 1d -i ./temp_sound
+    let x--
+  done
+  dialog --nocancel --menu "Multiple sound devices have been detected in your system. You need to choose a default sound card for audio output." 15 72 15 ${snddevs} 2>./temp_snd
+  tmpdev=`cat ./temp_snd`
+  echo -e "pcm.!default { type hw\ncard ${tmpdev} }\nctl.!default { type hw\ncard ${tmpdev} }" > /etc/asound.conf
 fi
 
 # Bring up sound levels
@@ -80,38 +80,38 @@ cat /opt/templates/wbar.head > $PANEL_UPPER
 
 # Parse game files and generate menus
 for game in /opt/games/*; do
-	$game/init.sh
-	pure_game=`basename $game`
-	GAMENAME=$(sed -n "s/NAME=\[\(.*\)\]/\1/p" $game/info)
-	if [ $(grep $pure_game /opt/gamelist_lite) ]; then
-		echo "   [exec] ($GAMENAME) {/opt/bin/start-noti $game/start.sh}" >> $MENU
-		echo "i: $game/icon.png" >> $PANEL_LOWER
-		echo "c: /opt/bin/start-noti $game/start.sh" >> $PANEL_LOWER
-		echo "t: $GAMENAME " >> $PANEL_LOWER
-		echo "" >> $PANEL_LOWER
-	elif [ $(grep $pure_game /opt/gamelist_big) ]; then
-		echo "   [exec] ($GAMENAME) {/opt/bin/start-noti $game/start.sh}" >> $MENU
-		echo "i: $game/icon.png" >> $PANEL_UPPER
-		echo "c: /opt/bin/start-noti $game/start.sh" >> $PANEL_UPPER
-		echo "t: $GAMENAME " >> $PANEL_UPPER
-		echo "" >> $PANEL_UPPER
-	fi
+  $game/init.sh
+  pure_game=`basename $game`
+  GAMENAME=$(sed -n "s/NAME=\[\(.*\)\]/\1/p" $game/info)
+  if [ $(grep $pure_game /opt/gamelist_lite) ]; then
+    echo "   [exec] ($GAMENAME) {/opt/bin/start-noti $game/start.sh}" >> $MENU
+    echo "i: $game/icon.png" >> $PANEL_LOWER
+    echo "c: /opt/bin/start-noti $game/start.sh" >> $PANEL_LOWER
+    echo "t: $GAMENAME " >> $PANEL_LOWER
+    echo "" >> $PANEL_LOWER
+  elif [ $(grep $pure_game /opt/gamelist_big) ]; then
+    echo "   [exec] ($GAMENAME) {/opt/bin/start-noti $game/start.sh}" >> $MENU
+    echo "i: $game/icon.png" >> $PANEL_UPPER
+    echo "c: /opt/bin/start-noti $game/start.sh" >> $PANEL_UPPER
+    echo "t: $GAMENAME " >> $PANEL_UPPER
+    echo "" >> $PANEL_UPPER
+  fi
 done
 
 cat /opt/templates/menu.tail >> $MENU
 
 # Ask user for keymap preference
 function keyboard_menu {
-	dialog --nocancel --menu "Please choose your keymap:" 15 72 15 "de" "German" "us" "US English" "pl" "Polish" "ru" "Russian" "jp" "Japanese" "fr" "French" "es" "Spanish" "other" "Other" 2>./temp_kb
-	result=`cat ./temp_kb`
-	if [ "$result" == "other" ]; then
-		dialog --nocancel --inputbox "Type in one of these country codes to choose your keymap: be, bg, ca, ch, cz, de, dk, dvorak, es, fi, fr, gb, hu, it, jp, no, pl, pt, ru, se, sk, th, us" 10 72 2>./temp_kb
-	fi
-	result=`cat ./temp_kb`
+dialog --nocancel --menu "Please choose your keymap:" 15 72 15 "de" "German" "us" "US English" "pl" "Polish" "ru" "Russian" "jp" "Japanese" "fr" "French" "es" "Spanish" "other" "Other" 2>./temp_kb
+result=`cat ./temp_kb`
+if [ "$result" == "other" ]; then
+  dialog --nocancel --inputbox "Type in one of these country codes to choose your keymap: be, bg, ca, ch, cz, de, dk, dvorak, es, fi, fr, gb, hu, it, jp, no, pl, pt, ru, se, sk, th, us" 10 72 2>./temp_kb
+fi
+result=`cat ./temp_kb`
 }
 
 while [ "$result" == "" ] || [ "$result" == "other" ]; do
-	keyboard_menu
+  keyboard_menu
 done
 
 # Set X keymap 
@@ -138,136 +138,137 @@ else
   echo "unknown" > "/medium-type"
 fi       
 
+# DEPRECATED FOR NOW
 # Do magic LAN booting stuff
-if [ "`grep lanhost /proc/cmdline`" ]; then
-	#mkdir /disklessroot
-	#TODO: Let user choose interface
-	/etc/rc.d/wicd stop
-	ifconfig eth0 192.168.10.1
-	/etc/rc.d/rpcbind start
-	/etc/rc.d/nfs-common start
-	/etc/rc.d/nfs-server start
-	/etc/rc.d/dnsmasq start
-fi
+#if [ "`grep lanhost /proc/cmdline`" ]; then
+#	#mkdir /disklessroot
+#	#TODO: Let user choose interface
+#	/etc/rc.d/wicd stop
+#	ifconfig eth0 192.168.10.1
+#	/etc/rc.d/rpcbind start
+#	/etc/rc.d/nfs-common start
+#	/etc/rc.d/nfs-server start
+#	/etc/rc.d/dnsmasq start
+#fi
 
 # License for proprietary drivers
 LICENSE()
 {
-   dialog --msgbox "$(cat /opt/drivers/closed_source_info.txt)" 22 71
-   if [ "$1" == "nv" ]
-   then
-      dialog --msgbox "$(cat /opt/drivers/nvidia.txt)" 22 71
-   elif [ "$1" == "ati" ]
-   then
-      dialog --msgbox "$(cat /opt/drivers/ati.txt)" 22 71
-   fi 
+  dialog --msgbox "$(cat /opt/drivers/closed_source_info.txt)" 22 71
+  if [ "$1" == "nv" ]
+  then
+    dialog --msgbox "$(cat /opt/drivers/nvidia.txt)" 22 71
+  elif [ "$1" == "ati" ]
+  then
+    dialog --msgbox "$(cat /opt/drivers/ati.txt)" 22 71
+  fi 
 
-   if ! dialog --yesno "Do you accept this license?\nDo you really want to install the driver?" 8 50 
-   then
-      opendriver
-   fi 
+  if ! dialog --yesno "Do you accept this license?\nDo you really want to install the driver?" 8 50 
+  then
+    opendriver
+  fi 
 }
 
 # Configure for free/open driver
 opendriver()
 {
-	# try normal method first
-	Xorg -configure && mv /xorg.conf.new /etc/X11/xorg.conf && sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf
-	# if that fails, do fallback and startx without xorg.conf
-	if [ $? -ne 0 ]; then 
-		rm /etc/X11/xorg.conf
-	fi
-	#/opt/bin/setxres
-	exit
+  # try normal method first
+  Xorg -configure && mv /xorg.conf.new /etc/X11/xorg.conf && sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf
+  # if that fails, do fallback and startx without xorg.conf
+  if [ $? -ne 0 ]; then 
+    rm /etc/X11/xorg.conf
+  fi
+  #/opt/bin/setxres
+  exit
 }
 
 # Enable the user to force a driver in case our .ids don't match any devices
 forcedriver()
 {
-	dialog --nocancel --menu "Your graphics card hardware could not be auto-detected. This usually means your graphics card is either old or very recent. If you know your graphics cards brand, you can try to force it, otherwise use the open driver (the latter is recommended if you are unsure or if your graphics card is old):" 0 0 0 "opendriver" "Open Driver" "nvidia" "NVIDIA" "ati" "ATI" 2> /tmp/temp_forcedriver
-	result=`cat /tmp/temp_forcedriver`
-	if [ "$result" == "nvidia" ]; then
-		LICENSE "nv"
-		pacman -Udf /opt/drivers/nvidia-utils-recent
-		pacman -Udf /opt/drivers/nvidia-recent
-		modprobe --first-time nvidia
-		sleep 2
-		Xorg -configure
-		mv /xorg.conf.new /etc/X11/xorg.conf
-		sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
-		exit
-	elif [ "$result" == "ati" ]; then
-		LICENSE "ati"
-		pacman -Udf /opt/drivers/catalyst-recent
-		modprobe --first-time fglrx
-		sleep 2
-		Xorg -configure
-		mv /xorg.conf.new /etc/X11/xorg.conf
-		aticonfig --initial
-		sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
-		exit
-	elif [ "$result" == "opendriver" ]; then
-		opendriver
-	else
-		opendriver
-	fi
+  dialog --nocancel --menu "Your graphics card hardware could not be auto-detected. This usually means your graphics card is either old or very recent. If you know your graphics cards brand, you can try to force it, otherwise use the open driver (the latter is recommended if you are unsure or if your graphics card is old):" 0 0 0 "opendriver" "Open Driver" "nvidia" "NVIDIA" "ati" "ATI" 2> /tmp/temp_forcedriver
+  result=`cat /tmp/temp_forcedriver`
+  if [ "$result" == "nvidia" ]; then
+    LICENSE "nv"
+    pacman -Udf /opt/drivers/nvidia-utils-recent.tar.xz
+    pacman -Udf /opt/drivers/nvidia-recent.tar.xz
+    modprobe --first-time nvidia
+    sleep 2
+    Xorg -configure
+    mv /xorg.conf.new /etc/X11/xorg.conf
+    sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
+    exit
+  elif [ "$result" == "ati" ]; then
+    LICENSE "ati"
+    pacman -Udf /opt/drivers/catalyst-recent.tar.xz
+    modprobe --first-time fglrx
+    sleep 2
+    Xorg -configure
+    mv /xorg.conf.new /etc/X11/xorg.conf
+    aticonfig --initial
+    sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
+    exit
+  elif [ "$result" == "opendriver" ]; then
+    opendriver
+  else
+    opendriver
+  fi
 }
 
 # This is where the actual automatic checks begin
 # The functions for the X stuff (starting with the license) above are only called here, not before
 CARD=$(lspci -n | sed -n "s/.* 0300: 10de:\(....\).*/\1/p")
 if [ "$CARD" != "" ]; then
-   # we've got a nvidia card
-   # check if prelegacy or legacy
-   # if no prelegacy or legacy, we've got recent
-   if [ $(grep -i "$CARD" /opt/drivers/nvidia-legacy.ids) ]; then
-      LICENSE "nv"
-      pacman -Udf /opt/drivers/nvidia-utils-legacy
-      pacman -Udf /opt/drivers/nvidia-legacy
-      modprobe --first-time nvidia
-      sleep 1
-      Xorg -configure
-      mv /xorg.conf.new /etc/X11/xorg.conf
-      sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
-      exit
-   elif [ $(grep -i "$CARD" /opt/drivers/nvidia-prelegacy.ids) ]; then
-      LICENSE "nv"
-      pacman -Udf /opt/drivers/nvidia-utils-prelegacy
-      pacman -Udf /opt/drivers/nvidia-prelegacy
-      modprobe --first-time nvidia
-      sleep 1
-      Xorg -configure
-      mv /xorg.conf.new /etc/X11/xorg.conf
-      sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
-      exit
-   else 
-      LICENSE "nv"
-      pacman -Udf /opt/drivers/nvidia-utils-recent
-      pacman -Udf /opt/drivers/nvidia-recent
-      modprobe --first-time nvidia
-      sleep 1
-      Xorg -configure
-      mv /xorg.conf.new /etc/X11/xorg.conf
-      sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
-      exit
-   fi
+  # we've got a nvidia card
+  # check if prelegacy or legacy
+  # if no prelegacy or legacy, we've got recent
+  if [ $(grep -i "$CARD" /opt/drivers/nvidia-legacy.ids) ]; then
+    LICENSE "nv"
+    pacman -Udf /opt/drivers/nvidia-utils-legacy.tar.xz
+    pacman -Udf /opt/drivers/nvidia-legacy.tar.xz
+    modprobe --first-time nvidia
+    sleep 1
+    Xorg -configure
+    mv /xorg.conf.new /etc/X11/xorg.conf
+    sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
+    exit
+  elif [ $(grep -i "$CARD" /opt/drivers/nvidia-prelegacy.ids) ]; then
+    LICENSE "nv"
+    pacman -Udf /opt/drivers/nvidia-utils-prelegacy.tar.xz
+    pacman -Udf /opt/drivers/nvidia-prelegacy.tar.xz
+    modprobe --first-time nvidia
+    sleep 1
+    Xorg -configure
+    mv /xorg.conf.new /etc/X11/xorg.conf
+    sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
+    exit
+  else 
+    LICENSE "nv"
+    pacman -Udf /opt/drivers/nvidia-utils-recent.tar.xz
+    pacman -Udf /opt/drivers/nvidia-recent.tar.xz
+    modprobe --first-time nvidia
+    sleep 1
+    Xorg -configure
+    mv /xorg.conf.new /etc/X11/xorg.conf
+    sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
+    exit
+  fi
 else
-   CARD=$(lspci -n | sed -n "s/.* 0300: 1002:\(....\).*/\1/p")
-   if [ "$CARD" != "" ]; then
-	  # we're doing this in reverse for ATI because there is no older driver available to us anyway
-      if [ $(grep -i "$CARD" /opt/drivers/ati-recent.ids) ]; then
-         LICENSE "ati"
-         pacman -Udf /opt/drivers/catalyst-recent
-	 modprobe --first-time fglrx
-         sleep 2
-         Xorg -configure
-         mv /xorg.conf.new /etc/X11/xorg.conf
-         aticonfig --initial
-         sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
-         #perl /opt/bin/setxdepth.pl
-         exit
-      fi
-   fi
+  CARD=$(lspci -n | sed -n "s/.* 0300: 1002:\(....\).*/\1/p")
+  if [ "$CARD" != "" ]; then
+    # we're doing this in reverse for ATI because there is no older driver available to us anyway
+    if [ $(grep -i "$CARD" /opt/drivers/ati-recent.ids) ]; then
+      LICENSE "ati"
+      pacman -Udf /opt/drivers/catalyst-recent.tar.xz
+      modprobe --first-time fglrx
+      sleep 2
+      Xorg -configure
+      mv /xorg.conf.new /etc/X11/xorg.conf
+      aticonfig --initial
+      sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
+      #perl /opt/bin/setxdepth.pl
+      exit
+    fi
+  fi
 fi
 forcedriver
 
