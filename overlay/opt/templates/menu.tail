@@ -1,10 +1,3 @@
-#   [exec] (-------) {/bin/false}
-#   [exec] (Save configs on USBstick) {sudo xterm -e usb-write}
-#   [exec] (Load configs from USBstick) {sudo xterm -e usb-read}
-#   [exec] (-------) {/bin/false}
-#   [exec] (Monitor Resolution) {sudo /opt/bin/monitor.pl}
-#   [exec] (Network Setup) {sudo /opt/bin/netconf.pl}
-#   [exec] (-------) {/bin/false}
    [sep]
    [exec] (Release Notes) {arora /opt/lglive.html}
 #   [exec] (Save settings to USB) {sudo /opt/create_pershome.sh}
@@ -14,7 +7,6 @@
    [exec] (alsamixer Sound Volume) {xterm -e 'alsamixer'}
    [exec] (XChat IRC Client) {xchat}
    [exec] (Arora Web Browser) {arora}
-#   [exec] (-------) {/bin/false}
    [sep]
    [exec] (Hide panels) {killall wbar}
    [exec] (Show panels) {/opt/bin/wbar_restore}
