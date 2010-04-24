@@ -31,7 +31,7 @@ menu.active.backgroundColor: rgb:77/77/74
 menu.active.foregroundColor: white
 menu.active.textColor: white
 
-rootCommand: feh --bg-center ~/.blackbox/Backgrounds/bg.png
+rootCommand: feh --bg-fill ~/.blackbox/Backgrounds/wallpaper.png
 
 slit.appearance: raised solid
 slit.backgroundColor: rgb:77/90/aa
