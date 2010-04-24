@@ -129,6 +129,7 @@ xorg
 xorg-input-drivers
 xorg-server
 xorg-video-drivers
+xz-utils
 zd1211-firmware
 zenity
 zlib
