@@ -202,6 +202,7 @@ root-image ()
   else
     mkarchiso -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}" &> /dev/null
   fi
+	rm -r "${BASEDIR}"/"${WORKDIR}"/root-image/home/*
 	[ "$?" -ne 0 ] && echo -e "\e[01;31mroot-image: Exiting due to error with mkarchiso\e[00m" && exit 1
 	[ ! ${QUIET} == "y" ] && echo "===== Finished root-image ====="
   return 0
