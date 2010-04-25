@@ -8,8 +8,8 @@
 # :(
 #
 
-# this might work but we don't use it because we're doing it completely manually
-#useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk -d /home/gamer gamer
+# Create user
+useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk -m -d /home/gamer gamer
 
 chmod 0440 /etc/sudoers
 
@@ -27,21 +27,13 @@ if [[ `blkid|grep -o LGLIVE_HOME` ]]; then
   dialog --nocancel --menu "A persistent home for lglive has been detected on your medium. Do you want to make use of this home or use a default, non-persistent one?:" 15 72 15 "persistent" "Use persistent home" "default" "Use default home" 2>./temp_home
   result=`cat ./temp_home`
   if [[ "$result" == "persistent" ]]; then
-    mkdir -p /home/gamer
     mount -L LGLIVE_HOME /home/gamer
-    chown -R gamer:gamer /home/gamer
     if [[ ! -f "/home/gamer/.xinitrc" ]]; then
-      su -c "cp -r /etc/skel/.* /home/gamer/" gamer
+      su -c "cp -r /etc/skel/.[a-zA-Z0-9]* /home/gamer/" gamer
       su -c "cp -r /etc/skel/* /home/gamer/" gamer
     fi
+    chown -R gamer:users /home/gamer
   fi
-fi
-
-# Create user directory for live session
-if [ ! -d /home/gamer ]; then 
-  mkdir /home/gamer && chown gamer:gamer /home/gamer
-  su -c "cp -r /etc/skel/.* /home/gamer/" gamer
-  su -c "cp -r /etc/skel/* /home/gamer/" gamer
 fi
 
 # Check for multiple sound cards
@@ -85,13 +77,13 @@ for game in /opt/games/*; do
   $game/init.sh
   pure_game=`basename $game`
   GAMENAME=$(sed -n "s/NAME=\[\(.*\)\]/\1/p" $game/info)
-  if [ $(grep $pure_game /opt/gamelist_lite) ]; then
+  if [ "$(grep $pure_game /opt/gamelist_lite)" ]; then
     echo "   [exec] ($GAMENAME) {/opt/bin/start-noti $game/start.sh}" >> $MENU
     echo "i: $game/icon.png" >> $PANEL_LOWER
     echo "c: /opt/bin/start-noti $game/start.sh" >> $PANEL_LOWER
     echo "t: $GAMENAME " >> $PANEL_LOWER
     echo "" >> $PANEL_LOWER
-  elif [ $(grep $pure_game /opt/gamelist_big) ]; then
+  elif [ "$(grep $pure_game /opt/gamelist_big)" ]; then
     echo "   [exec] ($GAMENAME) {/opt/bin/start-noti $game/start.sh}" >> $MENU
     echo "i: $game/icon.png" >> $PANEL_UPPER
     echo "c: /opt/bin/start-noti $game/start.sh" >> $PANEL_UPPER
