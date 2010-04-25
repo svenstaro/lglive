@@ -5,7 +5,7 @@
 
 xsetroot -cursor_name watch
 #xsetroot -cursor_name left_ptr
-feh --bg-center ~/.blackbox/Backgrounds/bg.png
+feh --bg-fill ~/.blackbox/Backgrounds/wallpaper.png
 
 /opt/bin/wbar_restore
 
