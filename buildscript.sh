@@ -129,11 +129,13 @@ overlay ()
   elif [ ${gamelist} == "gamelist_big" ]; then
     cp -f  "${BASEDIR}"/gamelist_{lite,big} "${BASEDIR}"/"${WORKDIR}"/overlay/
   fi
+
   if [ ${VERBOSE} == "y" ]; then
     pacman -Sy --config ${BASEDIR}/pacman.conf --dbpath "${BASEDIR}"/"${WORKDIR}"/root-image/var/lib/pacman || return 1
   else 
     pacman -Sy --config ${BASEDIR}/pacman.conf --dbpath "${BASEDIR}"/"${WORKDIR}"/root-image/var/lib/pacman &> /dev/null || return 1
   fi
+
 	while read game; do
 		[ ! ${QUIET} == "y" ] && echo "overlay: Installing ${game}"
     if [ ${VERBOSE} == "y" ]; then
@@ -141,8 +143,11 @@ overlay ()
     else
       pacman -S --config ${BASEDIR}/pacman.conf --noconfirm --root "${BASEDIR}/${WORKDIR}/overlay/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" ${game} &> /dev/null || return 1
     fi
-		cp -rp "${BASEDIR}/games/${game}" "${BASEDIR}/${WORKDIR}/overlay/opt/games/" || return 1
+		if [ -d "${BASEDIR}/games/${game}" ]; then
+			cp -rp "${BASEDIR}/games/${game}" "${BASEDIR}/${WORKDIR}/overlay/opt/games/" || return 1
+		fi
 	done < "${BASEDIR}/${gamelist}"
+
 	cd "${BASEDIR}"
 	#[ ! ${QUIET} == "y" ] && echo "overlay: Copying overlay to workdir"
 	#cp -rpL overlay "${WORKDIR}/" || return 1

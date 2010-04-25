@@ -1,6 +1,7 @@
    [sep]
    [exec] (Release Notes) {arora /opt/lglive.html}
 #   [exec] (Save settings to USB) {sudo /opt/create_pershome.sh}
+   [exec] (Host lglive in LAN) {sudo /opt/lglive-lanhost.sh}
    [sep]
    [exec] (xterm Terminal) {xterm}
    [exec] (Wicd Network Config) {wicd-client -n}

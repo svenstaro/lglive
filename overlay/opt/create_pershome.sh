@@ -1,5 +1,5 @@
 #!/bin/bash
-zenity --question --title="Create persistent home" --text="Do you want to create a persistent home on a currently inserted USB device? You will be able to choose this device after this dialog. Please note that this should only be done by experienced users as this can be a dangerous operation and data loss may occur when the wrong device is chosen."
+zenity --question --title="Create Persistent Home" --text="Do you want to create a persistent home on a currently inserted USB device? You will be able to choose this device after this dialog. Please note that this should only be done by experienced users as this can be a dangerous operation and data loss may occur when the wrong device is chosen."
 if [[ $? -eq 0 ]]; then
 	for disk in `ls /dev/disk/by-id/usb-*|grep -v part[[:digit:]]*$`; do
 		list+=`udevadm info --attribute-walk --name=${disk}|grep ATTRS{model}|grep -o \".*\"| sed s/\"//g`

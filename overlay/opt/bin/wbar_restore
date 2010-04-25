@@ -3,3 +3,4 @@ if [ -f /gamelist_big ]; then
 	wbar -config ~/wbar_upper -isize 50 -pos top &
 fi
 wbar -config ~/wbar_lower -isize 50 -pos bottom &
+wbar -config ~/wbar_right -isize 50 -pos right &
