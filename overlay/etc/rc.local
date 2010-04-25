@@ -31,7 +31,8 @@ if [[ `blkid|grep -o LGLIVE_HOME` ]]; then
     mount -L LGLIVE_HOME /home/gamer
     chown -R gamer:gamer /home/gamer
     if [[ ! -f "/home/gamer/.xinitrc" ]]; then
-      su -c "cp -r /etc/skel/.[a-zA-Z0-9]* /home/gamer/" gamer
+      su -c "cp -r /etc/skel/.* /home/gamer/" gamer
+      su -c "cp -r /etc/skel/* /home/gamer/" gamer
     fi
   fi
 fi
@@ -138,19 +139,6 @@ elif [[ `cat /proc/cmdline|grep -io 'diskless'` ]]; then
 else
   echo "unknown" > "/medium-type"
 fi       
-
-# DEPRECATED FOR NOW
-# Do magic LAN booting stuff
-#if [ "`grep lanhost /proc/cmdline`" ]; then
-#	#mkdir /disklessroot
-#	#TODO: Let user choose interface
-#	/etc/rc.d/wicd stop
-#	ifconfig eth0 192.168.10.1
-#	/etc/rc.d/rpcbind start
-#	/etc/rc.d/nfs-common start
-#	/etc/rc.d/nfs-server start
-#	/etc/rc.d/dnsmasq start
-#fi
 
 # License for proprietary drivers
 LICENSE()
