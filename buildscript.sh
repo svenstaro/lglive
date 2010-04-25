@@ -88,11 +88,11 @@ overlay ()
   fi
   [ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while getting NVIDIA driver packages\e[00m" && exit 1
 	mv -f `ls nvidia-173xx*pkg.tar.*|grep -v utils` nvidia-legacy.tar.xz || return 1
-	mv -f `ls nvidia-173xx*pkg.tar.*|grep utils` nvidia-legacy-utils.tar.xz || return 1
+	mv -f `ls nvidia-173xx*pkg.tar.*|grep utils` nvidia-utils-legacy.tar.xz || return 1
 	mv -f `ls nvidia-96xx*pkg.tar.*|grep -v utils` nvidia-prelegacy.tar.xz || return 1
-	mv -f `ls nvidia-96xx*pkg.tar.*|grep utils` nvidia-prelegacy-utils.tar.xz || return 1
+	mv -f `ls nvidia-96xx*pkg.tar.*|grep utils` nvidia-utils-prelegacy.tar.xz || return 1
 	mv -f `ls nvidia-*pkg.tar.*|grep -v utils|grep -v 173xx|grep -v 96xx` nvidia-recent.tar.xz || return 1
-	mv -f `ls nvidia-*pkg.tar.*|grep utils|grep -v 173xx|grep -v 96xx` nvidia-recent-utils.tar.xz || return 1
+	mv -f `ls nvidia-*pkg.tar.*|grep utils|grep -v 173xx|grep -v 96xx` nvidia-utils-recent.tar.xz || return 1
 
 	# NO ATI FOR NOW BECAUSE NO COMPATIBLE DRIVER IS AVAILABLE
 	# to reenable, put "base-devel" into packages.list again!
