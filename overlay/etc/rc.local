@@ -39,7 +39,8 @@ fi
 # Create user directory for live session
 if [ ! -d /home/gamer ]; then 
   mkdir /home/gamer && chown gamer:gamer /home/gamer
-  su -c "cp -r /etc/skel/.[a-zA-Z0-9]* /home/gamer/" gamer
+  su -c "cp -r /etc/skel/.* /home/gamer/" gamer
+  su -c "cp -r /etc/skel/* /home/gamer/" gamer
 fi
 
 # Check for multiple sound cards

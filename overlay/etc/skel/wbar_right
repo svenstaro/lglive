@@ -2,7 +2,7 @@ i: /usr/share/wbar/iconpack/wbar.osx/osxbarback.png
 t: /usr/share/wbar/iconpack/comic/12
 c: 
 
-i: 
+i: /usr/share/pixmaps/utilities-terminal.png
 c: xterm
 t: xterm
 
@@ -10,7 +10,7 @@ i: /usr/share/icons/hicolor/64x64/apps/wicd-gtk.png
 c: wicd-client -n
 t: Wicd
 
-i:
+i: /usr/share/pixmaps/preferences-desktop-sound.png
 c: xterm -e 'alsamixer'
 t: alsamixer 
 
