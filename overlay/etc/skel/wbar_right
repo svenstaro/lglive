@@ -1,0 +1,23 @@
+i: /usr/share/wbar/iconpack/wbar.osx/osxbarback.png
+t: /usr/share/wbar/iconpack/comic/12
+c: 
+
+i: 
+c: xterm
+t: xterm
+
+i: /usr/share/icons/hicolor/64x64/apps/wicd-gtk.png
+c: wicd-client -n
+t: Wicd
+
+i:
+c: xterm -e 'alsamixer'
+t: alsamixer 
+
+i: /usr/share/pixmaps/xchat.png
+c: xchat
+t: XChat
+
+i: /usr/share/icons/hicolor/128x128/apps/arora.png
+c: arora
+t: Arora
