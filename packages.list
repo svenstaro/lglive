@@ -74,6 +74,7 @@ memtest86+
 mkinitcpio
 mkinitcpio-nfs-utils
 module-init-tools
+mumble
 nano
 nbd
 ncurses

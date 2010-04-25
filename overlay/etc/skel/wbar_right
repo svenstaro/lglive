@@ -21,3 +21,7 @@ t: XChat
 i: /usr/share/icons/hicolor/128x128/apps/arora.png
 c: arora
 t: Arora
+
+i: /usr/share/icons/hicolor/scalable/apps/mumble.svg
+c: mumble
+t: Mumble

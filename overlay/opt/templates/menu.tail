@@ -8,6 +8,7 @@
    [exec] (alsamixer Sound Volume) {xterm -e 'alsamixer'}
    [exec] (XChat IRC Client) {xchat}
    [exec] (Arora Web Browser) {arora}
+   [exec] (Mumble Voice Chat) {mumble}
    [sep]
    [exec] (Hide panels) {killall wbar}
    [exec] (Show panels) {/opt/bin/wbar_restore}
