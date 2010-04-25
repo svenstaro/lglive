@@ -10,7 +10,7 @@ feh --bg-fill ~/.blackbox/Backgrounds/wallpaper.png
 /opt/bin/wbar_restore
 
 #devilspie&
-/opt/greeter.sh&
+/opt/bin/greeter.sh&
 
 # enable ctrl-alt-backspace again for easy x-killage
 setxkbmap -option terminate:ctrl_alt_bksp&
