@@ -8,9 +8,6 @@
 # :(
 #
 
-# Create user
-useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk -m -d /home/gamer gamer
-
 chmod 0440 /etc/sudoers
 
 # Prepare xchat with a random name
@@ -22,19 +19,28 @@ sed -e "/irc_nick1 /circ_nick1\ \=\ gamer$RANDOM" \
   < /etc/skel/.xchat2/xchat.conf > /tmp/xchat.conf.new
 mv /tmp/xchat.conf.new /etc/skel/.xchat2/xchat.conf
 
+# Create user
+#useradd -u 1000 -g users -G storage,floppy,optical,audio,video,network,games,wheel,disk -m -d /home/gamer gamer
 # Check for existence of persistent home
+
 if [[ `blkid|grep -o LGLIVE_HOME` ]]; then
   dialog --nocancel --menu "A persistent home for lglive has been detected on your medium. Do you want to make use of this home or use a default, non-persistent one?:" 15 72 15 "persistent" "Use persistent home" "default" "Use default home" 2>./temp_home
   result=`cat ./temp_home`
   if [[ "$result" == "persistent" ]]; then
+    mkdir -p /home/gamer
     mount -L LGLIVE_HOME /home/gamer
     if [[ ! -f "/home/gamer/.xinitrc" ]]; then
-      su -c "cp -r /etc/skel/.[a-zA-Z0-9]* /home/gamer/" gamer
-      su -c "cp -r /etc/skel/* /home/gamer/" gamer
+      su -c "cp -r /etc/skel/.[a-zA-Z0-9]* /home/gamer/"
+      su -c "cp -r /etc/skel/* /home/gamer/"
     fi
-    chown -R gamer:users /home/gamer
   fi
 fi
+
+if [[ ! -d /home/gamer ]]; then
+  su -c "cp -r /etc/skel /home/gamer"
+fi
+
+chown -R gamer:users /home/gamer
 
 # Check for multiple sound cards
 if [[ `cat /proc/asound/cards|wc -l` -gt 2 ]]; then
