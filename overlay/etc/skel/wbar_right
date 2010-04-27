@@ -22,6 +22,6 @@ i: /usr/share/icons/hicolor/128x128/apps/arora.png
 c: arora
 t: Arora
 
-i: /usr/share/icons/hicolor/scalable/apps/mumble.svg
+i: /usr/share/pixmaps/mumble.png
 c: mumble
 t: Mumble
