@@ -252,7 +252,6 @@ else
       mv /xorg.conf.new /etc/X11/xorg.conf
       aticonfig --initial
       sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
-      #perl /opt/bin/setxdepth.pl
       exit
     fi
   fi
