@@ -94,55 +94,58 @@ overlay ()
 	mv -f `ls nvidia-*pkg.tar.*|grep -v utils|grep -v 173xx|grep -v 96xx` nvidia-recent.tar.xz || return 1
 	mv -f `ls nvidia-*pkg.tar.*|grep utils|grep -v 173xx|grep -v 96xx` nvidia-utils-recent.tar.xz || return 1
 
-	# NO ATI FOR NOW BECAUSE NO COMPATIBLE DRIVER IS AVAILABLE
-	# to reenable, put "base-devel" into packages.list again!
-#	[ ! ${QUIET} == "y" ] && echo "overlay: Making ATI driver package"
-#	#cp -r /usr/src/linux-${KVER} ${BASEDIR}/${WORKDIR}/root-image/usr/src/
-#	cd ${BASEDIR}/${WORKDIR}/root-image/tmp/ 
-#	wget -q http://aur.archlinux.org/packages/catalyst/catalyst.tar.gz
-#	tar xzf catalyst.tar.gz && rm catalyst.tar.gz
-#	cd catalyst && [ ${VERBOSE} == "y" ] && makepkg --asroot --nobuild || makepkg --asroot --nobuild &> /dev/null
-#	cd ../../../../
-#	echo 'cd /tmp/
-#	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while getting ATI driver packages\e[00m" && exit 1
-#	cd catalyst && makepkg -dfc --asroot > /dev/null
-#	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while making ATI driver packages\e[00m" && exit 1
-#	pacman -Rsnu --noconfirm base-devel &>/dev/null' >> ${BASEDIR}/${WORKDIR}/root-image/atiscript.sh
-#  if [ ${VERBOSE} == "y" ]; then
-#    chroot ${BASEDIR}/${WORKDIR}/root-image bash atiscript.sh || return 1   
-#  else
-#    chroot ${BASEDIR}/${WORKDIR}/root-image bash atiscript.sh &> /dev/null || return 1   
-#  fi
-#  mv ${BASEDIR}/${WORKDIR}/root-image/tmp/catalyst/catalyst-*.tar.* . && rm -r ${BASEDIR}/${WORKDIR}/root-image/tmp/catalyst && rm ${BASEDIR}/${WORKDIR}/root-image/atiscript.sh
-#
-#	#rm -r ${BASEDIR}/${WORKDIR}/root-image/usr/src/linux-${KVER}
-#	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while making ATI driver packages\e[00m" && exit 1
-#	mv -f `ls catalyst-*.tar.*|grep -v utils` catalyst-recent && mv catalyst-recent overlay/opt/drivers 
+	[ ! ${QUIET} == "y" ] && echo "overlay: Making ATI driver package"
+	#cp -r /usr/src/linux-${KVER} ${BASEDIR}/${WORKDIR}/root-image/usr/src/
+	cd ${BASEDIR}/${WORKDIR}/root-image/tmp/ 
+	wget -q http://aur.archlinux.org/packages/catalyst/catalyst.tar.gz
+	tar xzf catalyst.tar.gz && rm catalyst.tar.gz
+	cd catalyst && [ ${VERBOSE} == "y" ] && makepkg --asroot --nobuild || makepkg --asroot --nobuild &> /dev/null
+	cd ${BASEDIR}
+  if [ ${VERBOSE} == "y" ]; then
+		pacman -Sy --root "${BASEDIR}/${WORKDIR}/root-image/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" --config ${BASEDIR}/pacman.conf --noconfirm base-devel kernel26-headers xinetd netkit-bsd-finger || return 1
+  else
+		pacman -Sy --root "${BASEDIR}/${WORKDIR}/root-image/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" --config ${BASEDIR}/pacman.conf --noconfirm base-devel kernel26-headers xinetd netkit-bsd-finger || return 1
+	fi
+	echo 'cd /tmp/
+	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while getting ATI driver packages\e[00m" && exit 1
+	cd catalyst && linux32 makepkg -dfc --asroot > /dev/null
+	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while making ATI driver packages\e[00m" && exit 1
+	pacman -Rsnu --noconfirm base-devel &>/dev/null' >> ${BASEDIR}/${WORKDIR}/root-image/atiscript.sh
+	if [ ${VERBOSE} == "y" ]; then
+		chroot ${BASEDIR}/${WORKDIR}/root-image bash atiscript.sh || return 1   
+	else
+		chroot ${BASEDIR}/${WORKDIR}/root-image bash atiscript.sh &> /dev/null || return 1   
+	fi
+	mv ${BASEDIR}/${WORKDIR}/root-image/tmp/catalyst/catalyst-*.tar.* . && rm -r ${BASEDIR}/${WORKDIR}/root-image/tmp/catalyst && rm ${BASEDIR}/${WORKDIR}/root-image/atiscript.sh
+
+	#rm -r ${BASEDIR}/${WORKDIR}/root-image/usr/src/linux-${KVER}
+	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while making ATI driver packages\e[00m" && exit 1
+	mv -f `ls catalyst-*.tar.*|grep -v utils` catalyst-recent.tar.xz && mv catalyst-recent.tar.xz overlay/opt/drivers 
 
 	[ ! ${QUIET} == "y" ] && echo "overlay: Finished preparing driver packages"
 
 	[ ! ${QUIET} == "y" ] && echo "overlay: Setting gamelist '$gamelist'"
 	[ ! ${QUIET} == "y" ] && echo "overlay: Deleting old copied game data"
 	cp -rp "${BASEDIR}"/overlay "${BASEDIR}"/"${WORKDIR}"/overlay/ || return 1
-  if [ ${gamelist} == "gamelist_lite" ]; then
-    cp -f  "${BASEDIR}"/gamelist_lite "${BASEDIR}"/"${WORKDIR}"/overlay/
-  elif [ ${gamelist} == "gamelist_big" ]; then
-    cp -f  "${BASEDIR}"/gamelist_{lite,big} "${BASEDIR}"/"${WORKDIR}"/overlay/
-  fi
+	if [ ${gamelist} == "gamelist_lite" ]; then
+		cp -f  "${BASEDIR}"/gamelist_lite "${BASEDIR}"/"${WORKDIR}"/overlay/
+	elif [ ${gamelist} == "gamelist_big" ]; then
+		cp -f  "${BASEDIR}"/gamelist_{lite,big} "${BASEDIR}"/"${WORKDIR}"/overlay/
+	fi
 
-  if [ ${VERBOSE} == "y" ]; then
-    pacman -Sy --config ${BASEDIR}/pacman.conf --dbpath "${BASEDIR}"/"${WORKDIR}"/root-image/var/lib/pacman || return 1
-  else 
-    pacman -Sy --config ${BASEDIR}/pacman.conf --dbpath "${BASEDIR}"/"${WORKDIR}"/root-image/var/lib/pacman &> /dev/null || return 1
-  fi
+	if [ ${VERBOSE} == "y" ]; then
+		pacman -Sy --config ${BASEDIR}/pacman.conf --dbpath "${BASEDIR}"/"${WORKDIR}"/root-image/var/lib/pacman || return 1
+	else 
+		pacman -Sy --config ${BASEDIR}/pacman.conf --dbpath "${BASEDIR}"/"${WORKDIR}"/root-image/var/lib/pacman &> /dev/null || return 1
+	fi
 
 	while read game; do
 		[ ! ${QUIET} == "y" ] && echo "overlay: Installing ${game}"
-    if [ ${VERBOSE} == "y" ]; then
-      pacman -S --config ${BASEDIR}/pacman.conf --noconfirm --root "${BASEDIR}/${WORKDIR}/overlay/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" ${game} || return 1
-    else
-      pacman -S --config ${BASEDIR}/pacman.conf --noconfirm --root "${BASEDIR}/${WORKDIR}/overlay/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" ${game} &> /dev/null || return 1
-    fi
+		if [ ${VERBOSE} == "y" ]; then
+			pacman -S --config ${BASEDIR}/pacman.conf --noconfirm --root "${BASEDIR}/${WORKDIR}/overlay/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" ${game} || return 1
+		else
+			pacman -S --config ${BASEDIR}/pacman.conf --noconfirm --root "${BASEDIR}/${WORKDIR}/overlay/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" ${game} &> /dev/null || return 1
+		fi
 		if [ -d "${BASEDIR}/games/${game}" ]; then
 			cp -rp "${BASEDIR}/games/${game}" "${BASEDIR}/${WORKDIR}/overlay/opt/games/" || return 1
 		fi
@@ -153,7 +156,7 @@ overlay ()
 	#cp -rpL overlay "${WORKDIR}/" || return 1
 	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while copying overlay\e[00m" && exit 1
 	[ ! ${QUIET} == "y" ] && echo "===== Finished overlay ====="
-  return 0
+	return 0
 }
 
 base-iso ()
@@ -171,8 +174,8 @@ base-iso ()
 	[ ! ${QUIET} == "y" ] && echo "base-iso: Making initrd image"
 	git clone git://projects.archlinux.org/archiso.git archiso-temp &>/dev/null || return 1
 	cp -r archiso-temp/archiso/{hooks,install} ${BASEDIR}/${WORKDIR}/root-image/lib/initcpio/ || return 1
-  # TODO: Hacky workaround until klibc-utils fstype supports udf
-  #sed '/if mount -r -t "${_FSTYPE}" \/dev\/archiso \/bootmnt >\/dev\/null 2>&1; then/c\if mount -r -t udf \/dev\/archiso \/bootmnt >\/dev\/null 2>&1; then' -i ${BASEDIR}/${WORKDIR}/root-image/lib/initcpio/hooks/archiso || return 1
+	# TODO: Hacky workaround until klibc-utils fstype supports udf
+	#sed '/if mount -r -t "${_FSTYPE}" \/dev\/archiso \/bootmnt >\/dev\/null 2>&1; then/c\if mount -r -t udf \/dev\/archiso \/bootmnt >\/dev\/null 2>&1; then' -i ${BASEDIR}/${WORKDIR}/root-image/lib/initcpio/hooks/archiso || return 1
 	rm -r archiso-temp
 	cp ${BASEDIR}/mkinitcpio.conf ${BASEDIR}/${WORKDIR}/root-image/etc/mkinitcpio.conf || return 1
 	if [ ${VERBOSE} == "y" ]; then
@@ -181,11 +184,11 @@ base-iso ()
 		chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio.conf -k ${KVER} -g "/lglive.img" &>/dev/null || return 1
 	fi
 	mv ${BASEDIR}/${WORKDIR}/root-image/lglive.img "${BASEDIR}/${WORKDIR}/iso/boot/lglive.img" &>/dev/null ||return 1
-  sed -i "s/^CacheDir/\#CacheDir/" "${BASEDIR}/${WORKDIR}/root-image/etc/pacman.conf"
-  sed -i "/localrepo/,+2d" "${BASEDIR}/${WORKDIR}/root-image/etc/pacman.conf"
+	sed -i "s/^CacheDir/\#CacheDir/" "${BASEDIR}/${WORKDIR}/root-image/etc/pacman.conf"
+	sed -i "/localrepo/,+2d" "${BASEDIR}/${WORKDIR}/root-image/etc/pacman.conf"
 	[ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting due to error while running mkinitcpio\e[00m" && exit 1
 	[ ! ${QUIET} == "y" ] && echo "===== Finished base-iso ====="
-  return 0
+	return 0
 }
 
 root-image ()
@@ -194,18 +197,18 @@ root-image ()
 	[ ! -d "${BASEDIR}"/"${OUTDIR}" ] && mkdir "${BASEDIR}"/"${OUTDIR}"
 	[ ! -d "${BASEDIR}"/"${WORKDIR}" ] && mkdir "${BASEDIR}"/"${WORKDIR}"
 	[ ! -d "${BASEDIR}"/"${PKGCACHE}" ] && mkdir "${BASEDIR}"/"${PKGCACHE}"
-  sed -i "s|^CacheDir.*$|CacheDir = ${BASEDIR}\/${PKGCACHE}|" pacman.conf
-  sed -i "/localrepo/{n; s|.*|Server = file\:\/\/${BASEDIR}/localrepo\/|}" pacman.conf
+	sed -i "s|^CacheDir.*$|CacheDir = ${BASEDIR}\/${PKGCACHE}|" pacman.conf
+	sed -i "/localrepo/{n; s|.*|Server = file\:\/\/${BASEDIR}/localrepo\/|}" pacman.conf
 	[ ! ${QUIET} == "y" ] && echo "root-image: Installing packages"
-  if [ ${VERBOSE} == "y" ]; then
-    mkarchiso -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}"
-  else
-    mkarchiso -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}" &> /dev/null
-  fi
+	if [ ${VERBOSE} == "y" ]; then
+		mkarchiso -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}"
+	else
+		mkarchiso -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}" &> /dev/null
+	fi
 	rm -r "${BASEDIR}"/"${WORKDIR}"/root-image/home/*
 	[ "$?" -ne 0 ] && echo -e "\e[01;31mroot-image: Exiting due to error with mkarchiso\e[00m" && exit 1
 	[ ! ${QUIET} == "y" ] && echo "===== Finished root-image ====="
-  return 0
+	return 0
 }
 
 bootloader ()
@@ -219,28 +222,28 @@ bootloader ()
 		[ ! ${QUIET} == "y" ] && echo "bootloader: Copying files for 'syslinux'"
 		cp "${WORKDIR}/root-image/usr/lib/syslinux/isolinux.bin" "${WORKDIR}/iso/boot/isolinux" || return 1
 		cp "${WORKDIR}/root-image/usr/lib/syslinux/pxelinux.0" "${WORKDIR}/iso/boot/" || return 1
-    cp "${WORKDIR}/root-image/usr/lib/syslinux/"*.c32 "${WORKDIR}/iso/boot/isolinux/" || return 1
+		cp "${WORKDIR}/root-image/usr/lib/syslinux/"*.c32 "${WORKDIR}/iso/boot/isolinux/" || return 1
 		#sed "s|archisolabel=[^ ]*|archisolabel=${NAME}-${VER//./}|" -i ${WORKDIR}/iso/boot/pxelinux.cfg/default || return 1
 		[ "$?" -ne 0 ] && echo -e "\e[01;31mbootloader Exiting due to error while copying bootloader\e[00m" && exit 1
 	fi
 	[ ! ${QUIET} == "y" ] && echo "===== Finished bootloader ====="
-  return 0
+	return 0
 }
 
 # build: build <target>
 build ()
 {
 	TARGET="$1"
-  
-  #TODO: Persistent storage
-  #dd if=/dev/zero of="${BASEDIR}"/"${WORKDIR}"/iso/persistent.ext4 bs=1M count=4
-  #mkfs.ext4 -m0 -F "${BASEDIR}"/"${WORKDIR}"/iso/persistent.ext4
-  #mkdir "${BASEDIR}"/"${WORKDIR}"/archiso-mount-tmp 
-  #mount -o loop -t ext4 "${BASEDIR}"/"${WORKDIR}"/iso/persistent.ext4 "${BASEDIR}"/"${WORKDIR}"/archiso-mount-tmp
-  #mkdir -p /tmp/archiso-mount-tmp/home/gamer/persistent
-  #umount "${BASEDIR}"/"${WORKDIR}"/archiso-mount-tmp
-  #rmdir "${BASEDIR}"/"${WORKDIR}"/archiso-mount-tmp
-  #TODO
+
+	#TODO: Persistent storage
+	#dd if=/dev/zero of="${BASEDIR}"/"${WORKDIR}"/iso/persistent.ext4 bs=1M count=4
+	#mkfs.ext4 -m0 -F "${BASEDIR}"/"${WORKDIR}"/iso/persistent.ext4
+	#mkdir "${BASEDIR}"/"${WORKDIR}"/archiso-mount-tmp 
+	#mount -o loop -t ext4 "${BASEDIR}"/"${WORKDIR}"/iso/persistent.ext4 "${BASEDIR}"/"${WORKDIR}"/archiso-mount-tmp
+	#mkdir -p /tmp/archiso-mount-tmp/home/gamer/persistent
+	#umount "${BASEDIR}"/"${WORKDIR}"/archiso-mount-tmp
+	#rmdir "${BASEDIR}"/"${WORKDIR}"/archiso-mount-tmp
+	#TODO
 
 	[ ! ${QUIET} == "y" ] && echo "===== Building final image for target: ${TARGET} ====="
 	[ ! ${QUIET} == "y" ] && echo "build: Removing ballast"
@@ -254,14 +257,14 @@ build ()
 	[ ! ${QUIET} == "y" ] && echo "build: Setting edition to '${edition}'"
 	[ ! ${QUIET} == "y" ] && echo "build: Saving to ${FULLNAME}-${edition}.${imagetype}"
 	[ ! ${QUIET} == "y" ] && echo "build: Starting build, this will take some time"
-  if [ ${VERBOSE} == "y" ]; then
-    mkarchiso -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}"
-  else 
-    mkarchiso -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}" &> /dev/null
-  fi
+	if [ ${VERBOSE} == "y" ]; then
+		mkarchiso -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}"
+	else 
+		mkarchiso -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}" &> /dev/null
+	fi
 	[ "$?" -ne 0 ] && echo -e "\e[01;31mbuild: Exiting due to error while running mkarchiso\e[00m" && exit 1
 	[ ! ${QUIET} == "y" ] && echo "===== Finished building final image for target: ${TARGET} ====="
-  return 0
+	return 0
 }
 
 clean ()
@@ -271,7 +274,7 @@ clean ()
 	rm -rf "${BASEDIR}/${WORKDIR}"
 	[ "$?" -ne 0 ] && echo -e "\e[01;31mclean: Exiting due to error while cleaning workdir\e[00m" && exit 1
 	[ ! ${QUIET} == "y" ] && echo "===== Cleaning finished successfully ====="
-  return 0
+	return 0
 }
 
 # Catch options here
