@@ -101,9 +101,14 @@ overlay ()
 	tar xzf catalyst.tar.gz && rm catalyst.tar.gz
 	cd catalyst && [ ${VERBOSE} == "y" ] && makepkg --asroot --nobuild || makepkg --asroot --nobuild &> /dev/null
 	cd ${BASEDIR}
+  if [ ${VERBOSE} == "y" ]; then
+		pacman -Sy --root "${BASEDIR}/${WORKDIR}/root-image/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" --config ${BASEDIR}/pacman.conf --noconfirm base-devel kernel26-headers xinetd netkit-bsd-finger || return 1
+  else
+		pacman -Sy --root "${BASEDIR}/${WORKDIR}/root-image/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" --config ${BASEDIR}/pacman.conf --noconfirm base-devel kernel26-headers xinetd netkit-bsd-finger || return 1
+	fi
 	echo 'cd /tmp/
 	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while getting ATI driver packages\e[00m" && exit 1
-	cd catalyst && pacman -S --noconfirm base-devel && makepkg -dfc --asroot > /dev/null
+	cd catalyst && linux32 makepkg -dfc --asroot > /dev/null
 	[ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while making ATI driver packages\e[00m" && exit 1
 	pacman -Rsnu --noconfirm base-devel &>/dev/null' >> ${BASEDIR}/${WORKDIR}/root-image/atiscript.sh
 	if [ ${VERBOSE} == "y" ]; then
