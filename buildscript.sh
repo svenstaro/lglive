@@ -164,6 +164,7 @@ base-iso ()
 	[ ! ${QUIET} == "y" ] && echo "===== Making base-iso ====="
 	[ ! ${QUIET} == "y" ] && echo "base-iso: Copying boot-files"
 	mv "${WORKDIR}/root-image/boot" "${WORKDIR}/iso/" || true
+	mv "${WORKDIR}/iso/boot/memtest86+/memtest.bin" "${WORKDIR}/iso/boot/memtest"
 	[ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting due to error while moving boot files\e[00m" && exit 1
 	cp -r boot-files/* "${WORKDIR}/iso/boot/" || return 1
 	[ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting due to error while copying boot files\e[00m" && exit 1
