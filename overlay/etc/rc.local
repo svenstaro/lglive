@@ -9,6 +9,8 @@
 #
 
 chmod 0440 /etc/sudoers
+chown root /etc/sudoers
+chgrp root /etc/sudoers
 
 # Prepare xchat with a random name
 # the following is _very_ ugly and probably shouldn't be done in this place
