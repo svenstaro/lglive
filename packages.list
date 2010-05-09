@@ -39,6 +39,7 @@ gdbm
 gen-init-cpio
 gettext
 glibc
+gparted
 grep
 gtk-engines
 gzip
