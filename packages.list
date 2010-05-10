@@ -83,6 +83,7 @@ ndiswrapper
 ndiswrapper-utils
 net-tools
 nfs-utils
+numlockx
 openssl
 pam
 pciutils

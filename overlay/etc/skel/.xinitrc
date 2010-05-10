@@ -3,6 +3,7 @@
 #
 # Executed by startx (run your window manager from here)
 
+numlockx&
 xsetroot -cursor_name watch
 #xsetroot -cursor_name left_ptr
 feh --bg-fill ~/.blackbox/Backgrounds/wallpaper.png
