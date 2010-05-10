@@ -114,7 +114,6 @@ tcp_wrappers
 tiacx
 tiacx-firmware
 ttf-bitstream-vera
-ttf-dejavu
 udev
 usbutils
 util-linux-ng
