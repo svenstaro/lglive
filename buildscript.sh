@@ -211,6 +211,7 @@ bootloader ()
     cp "${WORKDIR}/root-image/usr/lib/syslinux/pxelinux.0" "${WORKDIR}/iso/boot/syslinux/" || return 1
     cp "${WORKDIR}/root-image/usr/lib/syslinux/gpxelinux.0" "${WORKDIR}/iso/boot/syslinux/" || return 1
     cp "${WORKDIR}/root-image/usr/lib/syslinux/"*.c32 "${WORKDIR}/iso/boot/syslinux/" || return 1
+    cp "${WORKDIR}/root-image/usr/lib/syslinux/poweroff.com "${WORKDIR}/iso/boot/syslinux/" || return 1
     #sed "s|archisolabel=[^ ]*|archisolabel=${NAME}-${VER//./}|" -i ${WORKDIR}/iso/boot/pxelinux.cfg/default || return 1
     [ "$?" -ne 0 ] && echo -e "\e[01;31mbootloader Exiting due to error while copying bootloader\e[00m" && exit 1
   fi
