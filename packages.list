@@ -8,6 +8,7 @@ aufs2-util
 b43-fwcutter
 base
 blackbox
+crda
 devilspie
 dhclient
 dialog
@@ -22,13 +23,10 @@ gtk-engines
 inetutils
 ipw2100-fw
 ipw2200-fw
-iwlwifi-3945-ucode
-iwlwifi-4965-ucode
-iwlwifi-5000-ucode
-iwlwifi-5150-ucode
 kbd
 kernel-headers
 lshw
+linux-firmware
 lynx
 memtest86+
 mkinitcpio
@@ -43,8 +41,6 @@ ntfs-3g
 ntfsprogs
 numlockx
 openssh
-rt2x00-rt61-fw
-rt2x00-rt71w-fw
 sudo
 syslinux
 tcpdump
@@ -54,6 +50,7 @@ ttf-bitstream-vera
 wbar
 wicd
 wireless_tools
+wpa_actiond
 wpa_supplicant
 xchat
 xf86-video-ati
