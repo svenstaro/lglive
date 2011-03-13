@@ -184,8 +184,10 @@ root-image ()
   sed -i "/localrepo/{n; s|.*|Server = file\:\/\/${BASEDIR}/localrepo\/|}" pacman.conf
   [ ! ${QUIET} == "y" ] && echo "root-image: Installing packages"
   if [ ${VERBOSE} == "y" ]; then
+    mkarchiso -C pacman.conf -p base -v create "${WORKDIR}"
     mkarchiso -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}"
   else
+    mkarchiso -C pacman.conf -p base -v create "${WORKDIR}"
     mkarchiso -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}" &> /dev/null
   fi
   rm -r "${BASEDIR}"/"${WORKDIR}"/root-image/home/* || true
