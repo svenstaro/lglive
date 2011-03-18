@@ -21,6 +21,8 @@
 #### Change these settings to modify how this ISO is built.
 # The directory that we use for working files.
 WORKDIR="work"
+# Directory on the iso where our stuff is installed.
+INSTALL_DIR=lglive
 # Output directory for built images.
 OUTDIR="out"
 # Directory where packages are cached.
@@ -145,15 +147,16 @@ base-iso ()
 {
   [ ! ${QUIET} == "y" ] && echo "===== Making base-iso ====="
   [ ! ${QUIET} == "y" ] && echo "base-iso: Copying boot-files"
-  mv "${WORKDIR}/root-image/boot" "${WORKDIR}/iso/" || true
-  mv "${WORKDIR}/iso/boot/memtest86+/memtest.bin" "${WORKDIR}/iso/boot/memtest"
+  mv "${WORKDIR}/root-image/boot" "${WORKDIR}/iso/${INSTALL_DIR}/boot" || true
+  mv "${WORKDIR}/iso/${INSTALL_DIR}/boot/memtest86+/memtest.bin" "${WORKDIR}/iso/${INSTALL_DIR}/boot/memtest"
   [ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting due to error while moving boot files\e[00m" && exit 1
-  cp -r boot-files/* "${WORKDIR}/iso/boot/" || return 1
+  mkdir -p ${WORKDIR}/iso/syslinux
+  cp -r boot-files/* "${WORKDIR}/iso/syslinux/" || return 1
   [ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting due to error while copying boot files\e[00m" && exit 1
   [ ! ${QUIET} == "y" ] && echo "base-iso: Preparing isomounts"
-  cp isomounts "${WORKDIR}" || return 1
+  cp isomounts "${WORKDIR}/iso/${INSTALL_DIR}/isomounts" || return 1
   [ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting because no isomounts file was found\e[00m" && exit 1
-  sed -i "s|@ARCH@|${ARCH}|g" "${WORKDIR}/isomounts"
+  sed -i "s|@ARCH@|${ARCH}|g" "${WORKDIR}/iso/${INSTALL_DIR}/isomounts"
   [ ! ${QUIET} == "y" ] && echo "base-iso: Making initrd image"
   git clone git://projects.archlinux.org/archiso.git archiso-temp &>/dev/null || return 1
   cp -r archiso-temp/archiso/{hooks,install} ${BASEDIR}/${WORKDIR}/root-image/lib/initcpio/ || return 1
@@ -166,7 +169,7 @@ base-iso ()
   else
     chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio.conf -k ${KVER} -g "/lglive.img" &>/dev/null || return 1
   fi
-  mv ${BASEDIR}/${WORKDIR}/root-image/lglive.img "${BASEDIR}/${WORKDIR}/iso/boot/lglive.img" &>/dev/null ||return 1
+  mv ${BASEDIR}/${WORKDIR}/root-image/lglive.img "${BASEDIR}/${WORKDIR}/iso/${INSTALL_DIR}/boot/lglive.img" &>/dev/null ||return 1
   sed -i "s/^CacheDir/\#CacheDir/" "${BASEDIR}/${WORKDIR}/root-image/etc/pacman.conf"
   sed -i "/localrepo/,+2d" "${BASEDIR}/${WORKDIR}/root-image/etc/pacman.conf"
   [ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting due to error while running mkinitcpio\e[00m" && exit 1
@@ -184,11 +187,11 @@ root-image ()
   sed -i "/localrepo/{n; s|.*|Server = file\:\/\/${BASEDIR}/localrepo\/|}" pacman.conf
   [ ! ${QUIET} == "y" ] && echo "root-image: Installing packages"
   if [ ${VERBOSE} == "y" ]; then
-    mkarchiso -C pacman.conf -p base -v create "${WORKDIR}"
-    mkarchiso -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}"
+    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p base -v create "${WORKDIR}"
+    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}"
   else
-    mkarchiso -C pacman.conf -p base -v create "${WORKDIR}"
-    mkarchiso -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}" &> /dev/null
+    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p base -v create "${WORKDIR}"
+    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}" &> /dev/null
   fi
   rm -r "${BASEDIR}"/"${WORKDIR}"/root-image/home/* || true
   rm -r "${BASEDIR}"/"${WORKDIR}"/root-image/root/* || true
@@ -206,12 +209,12 @@ bootloader ()
     [ "$?" -ne 0 ] && echo -e "\e[01;31mbootloader: Exiting due to error while copying bootloader\e[00m" && exit 1
   elif [ ${BOOTLOADER} == "syslinux" ]; then
     [ ! ${QUIET} == "y" ] && echo "bootloader: Copying files for 'syslinux'"
-    cp "${WORKDIR}/root-image/usr/lib/syslinux/isolinux.bin" "${WORKDIR}/iso/boot/syslinux/" || return 1
-    cp "${WORKDIR}/root-image/usr/lib/syslinux/memdisk" "${WORKDIR}/iso/boot/syslinux/" || return 1
-    cp "${WORKDIR}/root-image/usr/lib/syslinux/pxelinux.0" "${WORKDIR}/iso/boot/syslinux/" || return 1
-    cp "${WORKDIR}/root-image/usr/lib/syslinux/gpxelinux.0" "${WORKDIR}/iso/boot/syslinux/" || return 1
-    cp "${WORKDIR}/root-image/usr/lib/syslinux/"*.c32 "${WORKDIR}/iso/boot/syslinux/" || return 1
-    cp "${WORKDIR}/root-image/usr/lib/syslinux/poweroff.com "${WORKDIR}/iso/boot/syslinux/" || return 1
+    cp "${WORKDIR}/root-image/usr/lib/syslinux/isolinux.bin" "${WORKDIR}/iso/syslinux/" || return 1
+    cp "${WORKDIR}/root-image/usr/lib/syslinux/memdisk" "${WORKDIR}/iso/syslinux/" || return 1
+    cp "${WORKDIR}/root-image/usr/lib/syslinux/pxelinux.0" "${WORKDIR}/iso/syslinux/" || return 1
+    cp "${WORKDIR}/root-image/usr/lib/syslinux/gpxelinux.0" "${WORKDIR}/iso/syslinux/" || return 1
+    cp "${WORKDIR}/root-image/usr/lib/syslinux/"*.c32 "${WORKDIR}/iso/syslinux/" || return 1
+    cp "${WORKDIR}/root-image/usr/lib/syslinux/poweroff.com" "${WORKDIR}/iso/syslinux/" || return 1
     #sed "s|archisolabel=[^ ]*|archisolabel=${NAME}-${VER//./}|" -i ${WORKDIR}/iso/boot/pxelinux.cfg/default || return 1
     [ "$?" -ne 0 ] && echo -e "\e[01;31mbootloader Exiting due to error while copying bootloader\e[00m" && exit 1
   fi
@@ -247,9 +250,9 @@ build ()
   [ ! ${QUIET} == "y" ] && echo "build: Saving to ${FULLNAME}-${edition}.${imagetype}"
   [ ! ${QUIET} == "y" ] && echo "build: Starting build, this will take some time"
   if [ ${VERBOSE} == "y" ]; then
-    mkarchiso -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}"
+    mkarchiso -D ${INSTALL_DIR} -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}"
   else 
-    mkarchiso -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}" &> /dev/null
+    mkarchiso -D ${INSTALL_DIR} -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}" &> /dev/null
   fi
   [ "$?" -ne 0 ] && echo -e "\e[01;31mbuild: Exiting due to error while running mkarchiso\e[00m" && exit 1
   [ ! ${QUIET} == "y" ] && echo "===== Finished building final image for target: ${TARGET} ====="
