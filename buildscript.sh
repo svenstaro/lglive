@@ -52,6 +52,8 @@ VERBOSE="n"
 QUIET="n"
 # Absolute path to makepkg.conf.
 MAKEPKGCNF=`readlink -f makepkg.conf` 
+# Compress the squashfs with this compressor.
+COMPRESS="gzip"
 
 # usage: usage <exitvalue>
 usage ()
@@ -250,9 +252,9 @@ build ()
   [ ! ${QUIET} == "y" ] && echo "build: Saving to ${FULLNAME}-${edition}.${imagetype}"
   [ ! ${QUIET} == "y" ] && echo "build: Starting build, this will take some time"
   if [ ${VERBOSE} == "y" ]; then
-    mkarchiso -D ${INSTALL_DIR} -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}"
+    mkarchiso -D ${INSTALL_DIR} -c ${COMPRESS} -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}"
   else 
-    mkarchiso -D ${INSTALL_DIR} -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}" &> /dev/null
+    mkarchiso -D ${INSTALL_DIR} -c ${COMPRESS} -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}" &> /dev/null
   fi
   [ "$?" -ne 0 ] && echo -e "\e[01;31mbuild: Exiting due to error while running mkarchiso\e[00m" && exit 1
   [ ! ${QUIET} == "y" ] && echo "===== Finished building final image for target: ${TARGET} ====="
