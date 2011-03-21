@@ -30,10 +30,10 @@ PKGCACHE="pkgcache"
 # The name of our ISO. Does not specify the architecture!
 NAME="lglive"
 # Version will be appended to the ISO.
-VER="0.9.6"
+VER="0.9.7"
 # Kernel version. We'll need this.
 KVER="$(grep ^ALL_kver /etc/mkinitcpio.d/kernel26.kver | cut -d= -f2 | sed s/\'//g)"
-#KVER="2.6.38"
+#KVER="2.6.38" # You shouldn't attempt to make this on a kernel you aren't running.
 # Architecture will also be appended to the ISO name.
 ARCH="i686"
 #ARCH="`uname -m`" # we can't build x86_64 just yet! :(
