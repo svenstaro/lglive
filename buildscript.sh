@@ -52,8 +52,8 @@ VERBOSE="n"
 QUIET="n"
 # Absolute path to makepkg.conf.
 MAKEPKGCNF=`readlink -f makepkg.conf` 
-# Compress the squashfs with this compressor. Values: "lzma", "gzip", "lzo"
-COMPRESS="gzip"
+# Compress the squashfs with this compressor. Values: "xz", "gzip", "lzo"
+COMPRESS="xz"
 
 # usage: usage <exitvalue>
 usage ()
