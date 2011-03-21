@@ -33,7 +33,7 @@ NAME="lglive"
 VER="0.9.6"
 # Kernel version. We'll need this.
 KVER="$(grep ^ALL_kver /etc/mkinitcpio.d/kernel26.kver | cut -d= -f2 | sed s/\'//g)"
-#KVER="2.6.33"
+#KVER="2.6.38"
 # Architecture will also be appended to the ISO name.
 ARCH="i686"
 #ARCH="`uname -m`" # we can't build x86_64 just yet! :(
@@ -80,7 +80,7 @@ overlay ()
   [ ! ${QUIET} == "y" ] && echo "overlay: Target is: ${TARGET}"
 
   [ ! ${QUIET} == "y" ] && echo "overlay: Updating drivers"
-  cd overlay/opt/drivers
+  cd "${BASEDIR}/overlay/opt/drivers"
   [ ! ${QUIET} == "y" ] && echo "overlay: Cleaning old drivers" 
   rm *.tar.* &> /dev/null
   find . -type l|xargs rm &> /dev/null
@@ -106,7 +106,7 @@ overlay ()
   fi
   [ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while making ATI driver packages\e[00m" && exit 1
   mv -f `ls catalyst-*.tar.*|grep -v utils` catalyst-recent.tar.xz || return 1
-
+  cd "${BASEDIR}"
   [ ! ${QUIET} == "y" ] && echo "overlay: Finished preparing driver packages"
 
   [ ! ${QUIET} == "y" ] && echo "overlay: Setting gamelist '$gamelist'"
@@ -153,7 +153,8 @@ base-iso ()
   mv "${WORKDIR}/iso/${INSTALL_DIR}/boot/memtest86+/memtest.bin" "${WORKDIR}/iso/${INSTALL_DIR}/boot/memtest"
   [ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting due to error while moving boot files\e[00m" && exit 1
   mkdir -p ${WORKDIR}/iso/syslinux
-  cp -r boot-files/* "${WORKDIR}/iso/syslinux/" || return 1
+  cp boot-files/splash.png ${WORKDIR}/iso/${INSTALL_DIR}/boot/ || return 1
+  cp boot-files/syslinux/* ${WORKDIR}/iso/syslinux/ || return 1
   [ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting due to error while copying boot files\e[00m" && exit 1
   [ ! ${QUIET} == "y" ] && echo "base-iso: Preparing isomounts"
   cp isomounts "${WORKDIR}/iso/${INSTALL_DIR}/isomounts" || return 1
@@ -192,11 +193,11 @@ root-image ()
     mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p base -v create "${WORKDIR}"
     mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}"
   else
-    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p base -v create "${WORKDIR}"
+    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p base -v create "${WORKDIR}" &> /dev/null
     mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}" &> /dev/null
   fi
   rm -r "${BASEDIR}"/"${WORKDIR}"/root-image/home/* || true
-  rm -r "${BASEDIR}"/"${WORKDIR}"/root-image/root/* || true
+  #rm -r "${BASEDIR}"/"${WORKDIR}"/root-image/root/* || true
   [ "$?" -ne 0 ] && echo -e "\e[01;31mroot-image: Exiting due to error with mkarchiso\e[00m" && exit 1
   [ ! ${QUIET} == "y" ] && echo "===== Finished root-image ====="
   return 0
@@ -244,17 +245,15 @@ build ()
   rm -rf "${WORKDIR}"/root-image/usr/include/*
   rm -rf "${WORKDIR}"/root-image/usr/src/
   pacman -Rsn --root "${BASEDIR}/${WORKDIR}/root-image/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" --config ${BASEDIR}/pacman.conf --noconfirm man-db man-pages || return 1
-  pacman -Q --root "${BASEDIR}/${WORKDIR}/root-image/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" --config ${BASEDIR}/pacman.conf --noconfirm doxygen && pacman -Rsn --root "${BASEDIR}/${WORKDIR}/root-image/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" --config ${BASEDIR}/pacman.conf --noconfirm doxygen
-  echo ${TARGET} | grep -q "iso" && imagetype="iso" || imagetype="img"
-  [ ! ${QUIET} == "y" ] && echo "build: Setting imagetype to '${imagetype}'"
+  #pacman -Q --root "${BASEDIR}/${WORKDIR}/root-image/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" --config ${BASEDIR}/pacman.conf --noconfirm doxygen && pacman -Rsn --root "${BASEDIR}/${WORKDIR}/root-image/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" --config ${BASEDIR}/pacman.conf --noconfirm doxygen
   echo ${TARGET} | grep -q "lite" && edition="lite" || edition="big"
   [ ! ${QUIET} == "y" ] && echo "build: Setting edition to '${edition}'"
-  [ ! ${QUIET} == "y" ] && echo "build: Saving to ${FULLNAME}-${edition}.${imagetype}"
+  [ ! ${QUIET} == "y" ] && echo "build: Saving to ${FULLNAME}-${edition}.iso"
   [ ! ${QUIET} == "y" ] && echo "build: Starting build, this will take some time"
   if [ ${VERBOSE} == "y" ]; then
-    mkarchiso -D ${INSTALL_DIR} -c ${COMPRESS} -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}"
+    mkarchiso -D ${INSTALL_DIR} -c ${COMPRESS} -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" iso "${WORKDIR}" "${FULLNAME}-${edition}.iso"
   else 
-    mkarchiso -D ${INSTALL_DIR} -c ${COMPRESS} -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" "${imagetype}" "${WORKDIR}" "${FULLNAME}-${edition}.${imagetype}" &> /dev/null
+    mkarchiso -D ${INSTALL_DIR} -c ${COMPRESS} -f -v -L "${NAME}-${VER//./}" -P "Linux-Gamers <live.linux-gamers.net>" -A "live.linux-gamers" -p "${BOOTLOADER}" iso "${WORKDIR}" "${FULLNAME}-${edition}.iso" &> /dev/null
   fi
   [ "$?" -ne 0 ] && echo -e "\e[01;31mbuild: Exiting due to error while running mkarchiso\e[00m" && exit 1
   [ ! ${QUIET} == "y" ] && echo "===== Finished building final image for target: ${TARGET} ====="
