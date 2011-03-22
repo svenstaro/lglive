@@ -125,9 +125,10 @@ overlay ()
   fi
 
   mkdir -p "${BASEDIR}/${WORKDIR}/overlay/opt/games/" || return 1
-  while read game; do
+  for game in $(cat ${BASEDIR}/${gamelist}); do
     [ ! ${QUIET} == "y" ] && echo "overlay: Installing ${game}"
     if [ ${VERBOSE} == "y" ]; then
+      echo "pacman -S --config ${BASEDIR}/pacman.conf --noconfirm --root \"${BASEDIR}/${WORKDIR}/overlay/\" --dbpath \"${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman\" ${game} || return 1"
       pacman -S --config ${BASEDIR}/pacman.conf --noconfirm --root "${BASEDIR}/${WORKDIR}/overlay/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" ${game} || return 1
     else
       pacman -S --config ${BASEDIR}/pacman.conf --noconfirm --root "${BASEDIR}/${WORKDIR}/overlay/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" ${game} &> /dev/null || return 1
@@ -135,7 +136,7 @@ overlay ()
     if [ -d "${BASEDIR}/games/${game}" ]; then
       cp -rp "${BASEDIR}/games/${game}" "${BASEDIR}/${WORKDIR}/overlay/opt/games/" || return 1
     fi
-  done < "${BASEDIR}/${gamelist}"
+  done
 
   cd "${BASEDIR}"
   #[ ! ${QUIET} == "y" ] && echo "overlay: Copying overlay to workdir"
