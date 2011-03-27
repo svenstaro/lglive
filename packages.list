@@ -60,5 +60,6 @@ xorg-server-utils
 xorg-utils
 xorg-xinit
 xterm
+xz
 zd1211-firmware
 zenity
