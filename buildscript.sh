@@ -242,7 +242,8 @@ build ()
   [ ! ${QUIET} == "y" ] && echo "===== Building final image for target: ${TARGET} ====="
   [ ! ${QUIET} == "y" ] && echo "build: Removing ballast"
   rm -rf "${WORKDIR}"/root-image/usr/include/*
-  rm -rf "${WORKDIR}"/root-image/usr/src/
+  rm -rf "${WORKDIR}"/root-image/usr/src/*
+  rm -rf "${WORKDIR}"/root-image/usr/share/doc/*
   pacman -Rsn --root "${BASEDIR}/${WORKDIR}/root-image/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" --config ${BASEDIR}/pacman.conf --noconfirm man-db man-pages || return 1
   #pacman -Q --root "${BASEDIR}/${WORKDIR}/root-image/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" --config ${BASEDIR}/pacman.conf --noconfirm doxygen && pacman -Rsn --root "${BASEDIR}/${WORKDIR}/root-image/" --dbpath "${BASEDIR}/${WORKDIR}/root-image/var/lib/pacman" --config ${BASEDIR}/pacman.conf --noconfirm doxygen
   echo ${TARGET} | grep -q "lite" && edition="lite" || edition="big"
