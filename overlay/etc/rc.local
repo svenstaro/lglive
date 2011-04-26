@@ -117,12 +117,9 @@ while [ "$result" == "" ] || [ "$result" == "other" ]; do
 done
 
 # Set X keymap 
-sed -e "/xkb.layout/s/>.*</>$result</" < /etc/hal/fdi/policy/10-keymap.fdi > /etc/hal/fdi/policy/10-keymap.new
-mv /etc/hal/fdi/policy/10-keymap.new /etc/hal/fdi/policy/10-keymap.fdi
-/etc/rc.d/hal restart
+sed -i -e "/keyboard/i Option \"XkbLayout\" \"$result\"" /etc/X11/xorg.conf.d/10-evdev.conf
 # Set console keymap
-sed -e "/KEYMAP/s/\".*\"/\"$result\"/" < /etc/rc.conf > /etc/rc.conf.new
-mv /etc/rc.conf.new /etc/rc.conf
+sed -i -e "/KEYMAP/s/\".*\"/\"$result\"/" /etc/rc.conf
 rm ./temp_kb
 loadkeys $result
 
