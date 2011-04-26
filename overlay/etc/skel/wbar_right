@@ -1,6 +1,6 @@
-i: /usr/share/wbar/iconpack/wbar.osx/osxbarback.png
-t: /usr/share/wbar/iconpack/comic/12
-c: 
+i: /usr/share/pixmaps/wbar/osxbarback.png
+c: wbar --bpress --above-desk --pos right --isize 40 --idist 5 --nanim 4 --falfa 65 --vbar
+t: /usr/share/fonts/TTF/DejaVuSans-Bold/14
 
 i: /usr/share/pixmaps/utilities-terminal.png
 c: xterm

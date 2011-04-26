@@ -77,8 +77,8 @@ export PANEL_LOWER="/home/gamer/wbar_lower"
 export PANEL_UPPER="/home/gamer/wbar_upper"
 
 cat /opt/templates/menu.head > $MENU
-cat /opt/templates/wbar.head > $PANEL_LOWER
-cat /opt/templates/wbar.head > $PANEL_UPPER
+cat /opt/templates/wbar-bottom.head > $PANEL_LOWER
+cat /opt/templates/wbar-top.head > $PANEL_UPPER
 
 # Parse game files and generate menus
 for game in /opt/games/*; do

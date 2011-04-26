@@ -1,6 +1,6 @@
 killall wbar
 if [ -f /gamelist_big ]; then
-	wbar --config ~/wbar_upper --isize 40 --pos top &
+	wbar --config ~/wbar_upper &
 fi
-wbar --config ~/wbar_lower --isize 40 --pos bottom &
-wbar --config ~/wbar_right --isize 40 --pos right --vbar &
+wbar --config ~/wbar_lower &
+wbar --config ~/wbar_right &
