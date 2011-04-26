@@ -86,17 +86,15 @@ overlay ()
   find . -type l|xargs rm &> /dev/null
   [ ! ${QUIET} == "y" ] && echo "overlay: Making NVIDIA driver packages"
   if [ ${VERBOSE} == "y" ]; then
-    pacman -Sywd --config ${BASEDIR}/pacman.conf --cachedir `pwd` --noconfirm nvidia nvidia-utils nvidia-173xx nvidia-173xx-utils nvidia-96xx nvidia-96xx-utils
+    pacman -Sywd --config ${BASEDIR}/pacman.conf --cachedir `pwd` --noconfirm nvidia nvidia-utils nvidia-173xx nvidia-173xx-utils
   else
-    pacman -Sywd --config ${BASEDIR}/pacman.conf --cachedir `pwd` --noconfirm nvidia nvidia-utils nvidia-173xx nvidia-173xx-utils nvidia-96xx nvidia-96xx-utils &> /dev/null
+    pacman -Sywd --config ${BASEDIR}/pacman.conf --cachedir `pwd` --noconfirm nvidia nvidia-utils nvidia-173xx nvidia-173xx-utils &> /dev/null
   fi
   [ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while getting NVIDIA driver packages\e[00m" && exit 1
   mv -f `ls nvidia-173xx*pkg.tar.*|grep -v utils` nvidia-legacy.tar.xz || return 1
   mv -f `ls nvidia-173xx*pkg.tar.*|grep utils` nvidia-utils-legacy.tar.xz || return 1
-  mv -f `ls nvidia-96xx*pkg.tar.*|grep -v utils` nvidia-prelegacy.tar.xz || return 1
-  mv -f `ls nvidia-96xx*pkg.tar.*|grep utils` nvidia-utils-prelegacy.tar.xz || return 1
-  mv -f `ls nvidia-*pkg.tar.*|grep -v utils|grep -v 173xx|grep -v 96xx` nvidia-recent.tar.xz || return 1
-  mv -f `ls nvidia-*pkg.tar.*|grep utils|grep -v 173xx|grep -v 96xx` nvidia-utils-recent.tar.xz || return 1
+  mv -f `ls nvidia-*pkg.tar.*|grep -v utils|grep -v 173xx` nvidia-recent.tar.xz || return 1
+  mv -f `ls nvidia-*pkg.tar.*|grep utils|grep -v 173xx` nvidia-utils-recent.tar.xz || return 1
 
   [ ! ${QUIET} == "y" ] && echo "overlay: Making ATI driver package"
   if [ ${VERBOSE} == "y" ]; then
