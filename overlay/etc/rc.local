@@ -195,7 +195,6 @@ forcedriver()
     sleep 2
     Xorg -configure
     mv /xorg.conf.new /etc/X11/xorg.conf
-    sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
     exit
   elif [ "$result" == "ati" ]; then
     LICENSE "ati"
@@ -205,7 +204,6 @@ forcedriver()
     Xorg -configure
     mv /xorg.conf.new /etc/X11/xorg.conf
     aticonfig --initial
-    sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
     exit
   elif [ "$result" == "opendriver" ]; then
     opendriver
@@ -229,7 +227,6 @@ if [ "$CARD" != "" ]; then
     sleep 1
     Xorg -configure
     mv /xorg.conf.new /etc/X11/xorg.conf
-    sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
     exit
   elif [ $(grep -i "$CARD" /opt/drivers/nvidia-prelegacy.ids) ]; then
     opendriver
@@ -241,7 +238,6 @@ if [ "$CARD" != "" ]; then
     sleep 1
     Xorg -configure
     mv /xorg.conf.new /etc/X11/xorg.conf
-    sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
     exit
   fi
 else
@@ -257,7 +253,6 @@ else
       Xorg -configure
       mv /xorg.conf.new /etc/X11/xorg.conf
       aticonfig --initial
-      sed -i -e "s/\"ZAxisMapping\".*\"4 5 6 7\"/\"Emulate3Buttons\" \"false\"/i" /etc/X11/xorg.conf 
       exit
     fi
   fi
