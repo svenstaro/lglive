@@ -42,6 +42,10 @@ ARCH="i686"
 # not possible to build hybrid images using grub as of this writing.
 BOOTLOADER="syslinux"
 # A list of packages to install, either space separated in a string or line separated in a file. Can include groups.
+
+# hacky fix till dcron is out of base
+BASE_PACKAGES=$(pacman -Sgq base | grep -v dcron)
+
 PACKAGES="`cat packages.list` ${BOOTLOADER}"
 # Directory we originate from.
 BASEDIR="`pwd`"
@@ -189,11 +193,11 @@ root-image ()
   sed -i "/localrepo/{n; s|.*|Server = file\:\/\/${BASEDIR}/localrepo\/|}" pacman.conf
   [ ! ${QUIET} == "y" ] && echo "root-image: Installing packages"
   if [ ${VERBOSE} == "y" ]; then
-    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p base -v create "${WORKDIR}"
-    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}"
+    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p "${BASE_PACKAGES}" -v create "${WORKDIR}" || return 1
+    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}" || return 1
   else
-    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p base -v create "${WORKDIR}" &> /dev/null
-    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}" &> /dev/null
+    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p "${BASE_PACKAGES}" -v create "${WORKDIR}" &> /dev/null || return 1
+    mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}" &> /dev/null || return 1
   fi
   rm -r "${BASEDIR}"/"${WORKDIR}"/root-image/home/* || true
   #rm -r "${BASEDIR}"/"${WORKDIR}"/root-image/root/* || true
