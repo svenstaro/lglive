@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Preferences>
+	<Item Name="game_version" Value="1.9" />
+	<Item Name="game_language" Value="" />
+	<Item Name="game_always_run" Value="0" />
+	<Item Name="game_menu_level" Value="menu_green_1" />
+	<Item Name="game_user_data_dir" Value="" />
+	<Item Name="game_camera_hor_speed" Value="0.3" />
+	<Item Name="game_camera_ver_speed" Value="0.2" />
+	<Item Name="video_fullscreen" Value="1" />
+	<Item Name="video_screen_w" Value="XXXX" />
+	<Item Name="video_screen_h" Value="YYYY" />
+	<Item Name="video_screen_bpp" Value="32" />
+	<Item Name="video_vsync" Value="0" />
+	<Item Name="video_geometry_quality" Value="0.5" />
+	<Item Name="video_texture_quality" Value="0.75" />
+	<Item Name="audio_music" Value="1" />
+	<Item Name="audio_sound" Value="1" />
+	<Item Name="audio_sound_volume" Value="100" />
+	<Item Name="audio_music_volume" Value="80" />
+	<Item Name="audio_hz" Value="44100" />
+	<Item Name="keyboard_key_up" Value="273" />
+	<Item Name="keyboard_key_down" Value="274" />
+	<Item Name="keyboard_key_left" Value="276" />
+	<Item Name="keyboard_key_right" Value="275" />
+	<Item Name="keyboard_key_jump" Value="115" />
+	<Item Name="keyboard_key_shoot" Value="32" />
+	<Item Name="keyboard_key_action" Value="97" />
+	<Item Name="keyboard_scroll_speed" Value="1" />
+	<Item Name="joy_enabled" Value="0" />
+	<Item Name="joy_name" Value="" />
+	<Item Name="joy_analog_jump" Value="0" />
+	<Item Name="joy_axis_hor" Value="0" />
+	<Item Name="joy_axis_ver" Value="1" />
+	<Item Name="joy_axis_threshold" Value="10000" />
+	<Item Name="joy_button_jump" Value="0" />
+	<Item Name="joy_button_item" Value="3" />
+	<Item Name="joy_button_shoot" Value="1" />
+	<Item Name="joy_button_action" Value="2" />
+	<Item Name="joy_button_exit" Value="4" />
+	<Item Name="level_background_images" Value="1" />
+	<Item Name="image_cache_enabled" Value="1" />
+	<Item Name="editor_mouse_auto_hide" Value="0" />
+	<Item Name="editor_show_item_images" Value="1" />
+	<Item Name="editor_item_image_size" Value="50" />
+</Preferences>
