@@ -27,6 +27,7 @@ ipw2200-fw
 lshw
 lxinput
 memtest86+
+mesa-demos
 mkinitcpio-nfs-utils
 mumble
 nbd
@@ -39,6 +40,7 @@ ntfs-3g
 ntfsprogs
 numlockx
 openssh
+pv
 sudo
 syslinux
 tcpdump
@@ -47,6 +49,7 @@ tiacx-firmware
 ttf-bitstream-vera
 wbar
 wicd
+wicd-gtk
 wireless_tools
 wpa_actiond
 xchat
