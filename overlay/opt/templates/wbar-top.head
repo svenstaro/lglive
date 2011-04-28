@@ -1,0 +1,4 @@
+i: /usr/share/pixmaps/wbar/osxbarback.png
+c: wbar --bpress --growdown --above-desk --pos top --isize 40 --idist 5 --nanim 4 --falfa 65
+t: /usr/share/fonts/TTF/VeraBd/12
+

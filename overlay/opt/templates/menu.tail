@@ -2,8 +2,10 @@
    [exec] (Release Notes) {arora /opt/lglive.html}
 #   [exec] (Save settings to USB) {sudo /opt/bin/create_pershome.sh}
    [exec] (Host lglive in LAN) {sudo /opt/bin/lglive-lanhost.sh}
+   [exec] (Host lglive in LAN) {sudo /opt/bin/lglive-installer.sh}
    [sep]
    [exec] (xterm Terminal) {xterm}
+   [exec] (Mouse/Keyboard Config) {lxinput}
    [exec] (Wicd Network Config) {wicd-client -n}
    [exec] (alsamixer Sound Volume) {xterm -e 'alsamixer'}
    [exec] (XChat IRC Client) {xchat}
