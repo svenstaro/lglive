@@ -246,7 +246,6 @@ build ()
 
   [ ! ${QUIET} == "y" ] && echo "===== Building final image for target: ${TARGET} ====="
   [ ! ${QUIET} == "y" ] && echo "build: Removing ballast"
-  rm -rf "${WORKDIR}"/root-image/usr/include/*
   rm -rf "${WORKDIR}"/root-image/usr/src/*
   rm -rf "${WORKDIR}"/root-image/usr/share/doc/*
   rm -rf "${WORKDIR}"/root-image/usr/share/man/*
