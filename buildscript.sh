@@ -200,6 +200,7 @@ root-image ()
     mkarchiso -D ${INSTALL_DIR} -C pacman.conf -p "${PACKAGES}" -v create "${WORKDIR}" &> /dev/null || return 1
   fi
   rm -r "${BASEDIR}"/"${WORKDIR}"/root-image/home/* || true
+  grep -v localrepo "${BASEDIR}"/pacman.conf > "${BASEDIR}"/"${WORKDIR}"/root-image/etc/pacman.conf
   #rm -r "${BASEDIR}"/"${WORKDIR}"/root-image/root/* || true
   [ "$?" -ne 0 ] && echo -e "\e[01;31mroot-image: Exiting due to error with mkarchiso\e[00m" && exit 1
   [ ! ${QUIET} == "y" ] && echo "===== Finished root-image ====="
