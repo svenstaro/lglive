@@ -25,7 +25,7 @@ inetutils
 ipw2100-fw
 ipw2200-fw
 lshw
-links
+lxinput
 memtest86+
 mkinitcpio-nfs-utils
 mumble
