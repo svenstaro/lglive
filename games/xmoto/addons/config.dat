@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<userconfig>
+	<var name="DisplayWidth"            value="XXXX" />
+	<var name="DisplayHeight"           value="YYYY" />
+	<var name="DisplayBPP"              value="32" />
+	<var name="DisplayWindowed"         value="false" />
+	<var name="DisplayMaxRenderFPS"     value="50" />
+	<var name="DrawLib"                 value="OPENGL" />
+	<var name="DefaultProfile"          value="asdasd" />
+	<var name="ScreenshotFormat"        value="png" />
+	<var name="StoreReplays"            value="true" />
+	<var name="ReplayFrameRate"         value="25.000000" />
+	<var name="CompressReplays"         value="true" />
+	<var name="WebLevelsURL"            value="http://xmoto.tuxfamily.org/levels.xml" />
+	<var name="WebDbSyncUploadURL"      value="http://xmoto.tuxfamily.org/tools/UploadDbSync.php" />
+	<var name="WebThemesURL"            value="http://xmoto.tuxfamily.org/themes.xml" />
+	<var name="WebThemesURLBase"        value="http://xmoto.tuxfamily.org/sprites" />
+	<var name="WebHighscoreUploadURL"   value="http://xmoto.tuxfamily.org/tools/UploadReplay.php" />
+</userconfig>
+

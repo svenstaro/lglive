@@ -1,1 +1,1 @@
-smc
+LC_ALL=C smc

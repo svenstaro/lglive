@@ -1,1 +1,1 @@
-pingus
+pingus --fullscreen

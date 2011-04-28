@@ -1,1 +1,1 @@
-frozen-bubble
+frozen-bubble --fullscreen

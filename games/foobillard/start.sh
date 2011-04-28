@@ -1,1 +1,1 @@
-foobillard
+foobillard --fullscreen
