@@ -82,7 +82,6 @@ cat /opt/templates/wbar-top.head > $PANEL_UPPER
 
 # Parse game files and generate menus
 for game in /opt/games/*; do
-  $game/init.sh
   pure_game=`basename $game`
   GAMENAME=$(sed -n "s/NAME=\[\(.*\)\]/\1/p" $game/info)
   if [ "$(grep $pure_game /opt/gamelist_lite)" ]; then
@@ -161,8 +160,8 @@ opendriver()
   CARD=$(lspci -n | sed -n "s/.* 0300: 10de:\(....\).*/\1/p")
   if [ "$CARD" != "" ]; then
     # we've got a nvidia card
-    modprobe --first-time nouveau
     echo "Using nouveau"
+    modprobe --first-time nouveau
     sleep 1
     echo 'Section "Device"' > /etc/X11/xorg.conf.d/20-nouveau.conf
     echo '    Identifier "Nvidia card"' >> /etc/X11/xorg.conf.d/20-nouveau.conf
@@ -173,7 +172,8 @@ opendriver()
     if [ "$CARD" != "" ]; then
       # we've got an ati card
       echo "Using radeon"
-      rm /etc/X11/xorg.conf
+      modprobe --first-time radeon
+      sleep 1
     fi
   fi
   exit
@@ -186,19 +186,16 @@ forcedriver()
   result=`cat /tmp/temp_forcedriver`
   if [ "$result" == "nvidia" ]; then
     LICENSE "nv"
-    pacman -Udf /opt/drivers/nvidia-utils-recent.tar.xz
-    pacman -Udf /opt/drivers/nvidia-recent.tar.xz
+    yes | pacman -Udf /opt/drivers/nvidia-utils-recent.tar.xz /opt/drivers/nvidia-recent.tar.xz
     modprobe --first-time nvidia
-    sleep 2
-    Xorg -configure
-    mv /xorg.conf.new /etc/X11/xorg.conf
+    sleep 1
     exit
   elif [ "$result" == "ati" ]; then
     LICENSE "ati"
-    pacman -Udf /opt/drivers/catalyst-recent.tar.xz
+    yes | pacman -Udf /opt/drivers/catalyst-recent.tar.xz
     modprobe --first-time fglrx
-    sleep 2
-    Xorg -configure
+    sleep 1
+    #Xorg -configure
     mv /xorg.conf.new /etc/X11/xorg.conf
     aticonfig --initial
     exit
@@ -218,23 +215,17 @@ if [ "$CARD" != "" ]; then
   # if no prelegacy or legacy, we've got recent
   if [ $(grep -i "$CARD" /opt/drivers/nvidia-legacy.ids) ]; then
     LICENSE "nv"
-    pacman -Udf /opt/drivers/nvidia-utils-legacy.tar.xz
-    pacman -Udf /opt/drivers/nvidia-legacy.tar.xz
+    yes | pacman -Udf /opt/drivers/nvidia-utils-legacy.tar.xz /opt/drivers/nvidia-legacy.tar.xz
     modprobe --first-time nvidia
     sleep 1
-    Xorg -configure
-    mv /xorg.conf.new /etc/X11/xorg.conf
     exit
   elif [ $(grep -i "$CARD" /opt/drivers/nvidia-prelegacy.ids) ]; then
     opendriver
   else 
     LICENSE "nv"
-    pacman -Udf /opt/drivers/nvidia-utils-recent.tar.xz
-    pacman -Udf /opt/drivers/nvidia-recent.tar.xz
+    yes | pacman -Udf /opt/drivers/nvidia-utils-recent.tar.xz /opt/drivers/nvidia-recent.tar.xz
     modprobe --first-time nvidia
     sleep 1
-    Xorg -configure
-    mv /xorg.conf.new /etc/X11/xorg.conf
     exit
   fi
 else
@@ -244,9 +235,9 @@ else
     # we're doing this in reverse for ATI because there is no older driver available to us anyway
     if [ $(grep -i "$CARD" /opt/drivers/ati-recent.ids) ]; then
       LICENSE "ati"
-      pacman -Udf /opt/drivers/catalyst-recent.tar.xz
+      yes | pacman -Udf /opt/drivers/catalyst-recent.tar.xz
       modprobe --first-time fglrx
-      sleep 2
+      sleep 1
       Xorg -configure
       mv /xorg.conf.new /etc/X11/xorg.conf
       aticonfig --initial
