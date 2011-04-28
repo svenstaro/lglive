@@ -1,10 +1,14 @@
 i: /usr/share/pixmaps/wbar/osxbarback.png
 c: wbar --bpress --above-desk --pos right --isize 40 --idist 5 --nanim 4 --falfa 65 --vbar
-t: /usr/share/fonts/TTF/DejaVuSans-Bold/14
+t: /usr/share/fonts/TTF/VeraBd/12
 
 i: /usr/share/pixmaps/utilities-terminal.png
 c: xterm
 t: xterm
+
+i: /usr/share/lxinput/input-mouse.png
+c: lxinput
+t: lxinput
 
 i: /usr/share/icons/hicolor/64x64/apps/wicd-gtk.png
 c: wicd-client -n
