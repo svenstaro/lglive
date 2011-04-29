@@ -137,7 +137,7 @@ else
 fi       
 
 # License for proprietary drivers
-LICENSE()
+license()
 {
   dialog --msgbox "$(cat /opt/drivers/closed_source_info.txt)" 22 71
   if [ "$1" == "nv" ]
@@ -167,54 +167,47 @@ opendriver()
     echo '    Identifier "Nvidia card"' >> /etc/X11/xorg.conf.d/20-nouveau.conf
     echo '    Driver "nouveau"' >> /etc/X11/xorg.conf.d/20-nouveau.conf
     echo 'EndSection' >> /etc/X11/xorg.conf.d/20-nouveau.conf
-  else
-    CARD=$(lspci -n | sed -n "s/.* 0300: 1002:\(....\).*/\1/p")
-    if [ "$CARD" != "" ]; then
-      # we've got an ati card
-      echo "Using radeon"
-      modprobe --first-time radeon
-      sleep 1
-    fi
+#  else
+#    CARD=$(lspci -n | sed -n "s/.* 0300: 1002:\(....\).*/\1/p")
+#    if [ "$CARD" != "" ]; then
+#      # we've got an ati card
+#      echo "Using radeon"
+#      modprobe --first-time radeon
+#      sleep 1
+#    fi
   fi
   exit
 }
 
 # Enable the user to force a driver in case our .ids don't match any devices
-forcedriver()
-{
-  dialog --nocancel --menu "Your graphics card hardware could not be auto-detected. This usually means your graphics card is either very old or very recent. If you know your graphics cards brand, you can try to force it, otherwise use the open driver (the latter is recommended if you are unsure or if your graphics card is old):" 0 0 0 "opendriver" "Open Driver" "nvidia" "NVIDIA" "ati" "ATI" 2> /tmp/temp_forcedriver
-  result=`cat /tmp/temp_forcedriver`
-  if [ "$result" == "nvidia" ]; then
-    LICENSE "nv"
-    yes | pacman -Udf /opt/drivers/nvidia-utils-recent.tar.xz /opt/drivers/nvidia-recent.tar.xz
-    modprobe --first-time nvidia
-    sleep 1
-    exit
-  elif [ "$result" == "ati" ]; then
-    LICENSE "ati"
-    yes | pacman -Udf /opt/drivers/catalyst-recent.tar.xz
-    modprobe --first-time fglrx
-    sleep 1
-    #Xorg -configure
-    mv /xorg.conf.new /etc/X11/xorg.conf
-    aticonfig --initial
-    exit
-  elif [ "$result" == "opendriver" ]; then
-    opendriver
-  else
-    opendriver
-  fi
-}
+#forcedriver()
+#{
+#  dialog --nocancel --menu "Your graphics card hardware could not be auto-detected. This usually means your graphics card is either very old or very recent. If you know your graphics cards brand, you can try to force it, otherwise use the open driver (the latter is recommended if you are unsure or if your graphics card is old):" 0 0 0 "opendriver" "Open Driver" "nvidia" "NVIDIA" "ati" "ATI" 2> /tmp/temp_forcedriver
+#  result=`cat /tmp/temp_forcedriver`
+#  if [ "$result" == "nvidia" ]; then
+#    license "nv"
+#    yes | pacman -Udf /opt/drivers/nvidia-utils-recent.tar.xz /opt/drivers/nvidia-recent.tar.xz
+#    modprobe --first-time nvidia
+#    sleep 1
+#    exit
+#  elif [ "$result" == "ati" ]; then
+#    opendriver
+#  elif [ "$result" == "opendriver" ]; then
+#    opendriver
+#  else
+#    opendriver
+#  fi
+#}
 
 # This is where the actual automatic checks begin
 # The functions for the X stuff (starting with the license) above are only called here, not before
-CARD=$(lspci -n | sed -n "s/.* 0300: 10de:\(....\).*/\1/p")
+CARD=$(lspci -n | sed -n "s/.* 0300: 10de:\(....\).*/\1/p") # check for nvidia
 if [ "$CARD" != "" ]; then
   # we've got a nvidia card
   # check if prelegacy or legacy
   # if no prelegacy or legacy, we've got recent
   if [ $(grep -i "$CARD" /opt/drivers/nvidia-legacy.ids) ]; then
-    LICENSE "nv"
+    license "nv"
     yes | pacman -Udf /opt/drivers/nvidia-utils-legacy.tar.xz /opt/drivers/nvidia-legacy.tar.xz
     modprobe --first-time nvidia
     sleep 1
@@ -222,29 +215,22 @@ if [ "$CARD" != "" ]; then
   elif [ $(grep -i "$CARD" /opt/drivers/nvidia-prelegacy.ids) ]; then
     opendriver
   else 
-    LICENSE "nv"
+    license "nv"
     yes | pacman -Udf /opt/drivers/nvidia-utils-recent.tar.xz /opt/drivers/nvidia-recent.tar.xz
     modprobe --first-time nvidia
     sleep 1
     exit
   fi
-else
-  CARD=$(lspci -n | sed -n "s/.* 0300: 1002:\(....\).*/\1/p")
-  if [ "$CARD" != "" ]; then
-    # we've got an ati card
-    # we're doing this in reverse for ATI because there is no older driver available to us anyway
-    if [ $(grep -i "$CARD" /opt/drivers/ati-recent.ids) ]; then
-      LICENSE "ati"
-      yes | pacman -Udf /opt/drivers/catalyst-recent.tar.xz
-      modprobe --first-time fglrx
-      sleep 1
-      Xorg -configure
-      mv /xorg.conf.new /etc/X11/xorg.conf
-      aticonfig --initial
-      exit
-    fi
-  fi
+#else
+#  CARD=$(lspci -n | sed -n "s/.* 0300: 1002:\(....\).*/\1/p") # check for ati
+#  if [ "$CARD" != "" ]; then
+#    # we've got an ati card
+#    opendriver
+#  else
+#    # we probably got intel, just call opendriver
+#    opendriver
+#  fi
 fi
-forcedriver
+#forcedriver
 
 # vim:ts=2:sw=2:expandtab

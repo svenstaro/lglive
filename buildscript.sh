@@ -100,14 +100,6 @@ overlay ()
   mv -f `ls nvidia-*pkg.tar.*|grep -v utils|grep -v 173xx` nvidia-recent.tar.xz || return 1
   mv -f `ls nvidia-*pkg.tar.*|grep utils|grep -v 173xx` nvidia-utils-recent.tar.xz || return 1
 
-  [ ! ${QUIET} == "y" ] && echo "overlay: Making ATI driver package"
-  if [ ${VERBOSE} == "y" ]; then
-    pacman -Sywd --config ${BASEDIR}/pacman.conf --cachedir `pwd` --noconfirm catalyst
-  else
-    pacman -Sywd --config ${BASEDIR}/pacman.conf --cachedir `pwd` --noconfirm catalyst &> /dev/null
-  fi
-  [ "$?" -ne 0 ] && echo -e "\e[01;31moverlay: Exiting due to error while making ATI driver packages\e[00m" && exit 1
-  mv -f `ls catalyst-*.tar.*|grep -v utils` catalyst-recent.tar.xz || return 1
   cd "${BASEDIR}"
   [ ! ${QUIET} == "y" ] && echo "overlay: Finished preparing driver packages"
 
