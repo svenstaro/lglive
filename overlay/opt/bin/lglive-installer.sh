@@ -3,15 +3,22 @@
 DEVICE=""
 
 select_device() {
-    DEVICE=$(zenity --list --title "Select target" --text "Please select the target drive for your live.linuX-gamers installation. <span color='red'>Warning! All data on the drive will be erased.</span>" --column="Drive" $(ls /dev/sd?))
-    if [[ $? != 0 ]]; then
-        exit
-    fi
+    while [[ $DEVICE == "" ]]; do
+        DEVICE=$(zenity --list --title "Select target" --text "Please select the target drive for your live.linuX-gamers installation. 
+<span color='red'>Warning! All data on the drive will be erased.</span>" --column="Drive" $(ls /dev/sd?))
+        if [[ $? != 0 ]]; then
+            exit
+        elif [[ $DEVICE == "" ]]; then
+            zenity --info --text "You have to select a target drive or press <b>Cancel</b>."
+        fi
+    done
+
     zenity --question --title "Are you sure?" --text "<span color='red' size='x-large'><b>Are you sure?</b> All data on the drive $DEVICE will be deleted.</span>" --cancel-label="Cancel" --ok-label="Yes, erase it."
 
     if [[ $? != 0 ]]; then
         exit
     fi
+    echo "Installing to $DEVICE"
 }
 
 autopart() {
@@ -65,4 +72,16 @@ install_bootloader() {
     mkinitcpio -p kernel26
 }
 
+echo ":: Device selection"
 select_device
+echo 
+echo ":: Partitioning device"
+autopart
+echo 
+echo ":: Copying files"
+copy_files
+echo 
+echo ":: Installing bootloader"
+install_bootloader
+echo
+echo "Done. Really. You may reboot now."
