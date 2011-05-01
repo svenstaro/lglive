@@ -1,8 +1,0 @@
-KERNEL=="sd[a-z]", NAME="%k", SYMLINK+="usb%m", GROUP="users", OPTIONS="last_rule"
-ACTION=="add", KERNEL=="sd[a-z][0-9]", SYMLINK+="usb%n", GROUP="users", NAME="%k"
-ACTION=="add", KERNEL=="sd[a-z][0-9]", RUN+="/bin/mkdir -p /media/usb%n"
-ACTION=="add", KERNEL=="sd[a-z][0-9]", PROGRAM=="/lib/initcpio/udev/vol_id -t %N", RESULT=="ntfs", RUN+="/bin/ntfs-3g -o users,rw,noauto,flush,nodev,nosuid,noexec,noatime,dmask=0,fmask=0111,gid=users,shortname=winnt /dev/%k /media/usb%n", OPTIONS="last_rule"
-ACTION=="add", KERNEL=="sd[a-z][0-9]", PROGRAM=="/lib/initcpio/udev/vol_id -t %N", RESULT=="vfat", RUN+="/bin/mount -t vfat -o rw,noauto,flush,quiet,nodev,nosuid,noexec,noatime,dmask=000,fmask=111 /dev/%k /media/usb%n", OPTIONS="last_rule"
-ACTION=="add", KERNEL=="sd[a-z][0-9]", RUN+="/bin/mount -t auto -o rw,noauto,sync,dirsync,noexec,nodev,noatime /dev/%k /media/usb%n", OPTIONS="last_rule"
-ACTION=="remove", KERNEL=="sd[a-z][0-9]", RUN+="/bin/umount -l /media/usb%n"
-ACTION=="remove", KERNEL=="sd[a-z][0-9]", RUN+="/bin/rmdir /media/usb%n", OPTIONS="last_rule"
