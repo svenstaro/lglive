@@ -1,0 +1,142 @@
+<options source='Scorched3D'>
+	<!-- Brightness: The game screen brightness (gamma)..  Default value : "10" Max = 40, Min = 3. -->
+	<!-- ExplosionParts: How many explosion clouds are drawn.  Default value : "8" Max = 10, Min = 0. -->
+	<!-- ExplosionSubParts: How many explosion sub clouds are drawn.  Default value : "4" Max = 5, Min = 0. -->
+	<!-- ExplosionParticleMult: The number of particles that each explosion will create (relative to explosion size).  Default value : "20" Max = 100, Min = 0. -->
+	<!-- DrawMovement: Draw the movement paths.  Default value : "off" . -->
+	<!-- ColorComponentSize: The number of bits to use for each of the RGBA components (0 = use default).  Default value : "0" . -->
+	<!-- SoundChannels: Number of sound channels to mix..  Default value : "8" . -->
+	<!-- BitsPerPixel: The number of bits per pixel to use for the display (0 = current display bbp).  Default value : "0" . -->
+	<!-- DepthBufferBits: The number of bits requested for the depth buffer.  Default value : "24" . -->
+	<!-- TankModelSize: The percentage size of the tank models.  Default value : "100" . -->
+	<!-- ToolTipTime: The milliseconds before showing a tool tip..  Default value : "100" . -->
+	<!-- ToolTipSpeed: The speed at which a tool tip will fade in..  Default value : "6" . -->
+	<!-- FramesPerSecondLimit: The maximum frame rate that the game will run at.  Default value : "250" . -->
+	<!-- LandDetialError: The amount of error allowed for each land patch as it gains in distance (in pixels, more is more error).  Default value : "6" . -->
+	<!-- WaterDetailLevelRamp: The amount of error allowed for each water patch as it gains in distance (more is less error).  Default value : "128" . -->
+	<!-- LandShadowsLOD: The level of detail to use for landscape shadows.  Default value : "0" . -->
+	<!-- NoFog: Do not use any fog extensions..  Default value : "off" . -->
+	<!-- DetailTexture: Use detail textures on the landscape.Adds the texture seen when very close to the landscape.Requires multi-texturing.  Default value : "on" . -->
+	<!-- SaveWindowPositions: Save the positions of all the onscreen windows..  Default value : "on" . -->
+	<!-- DoubleBuffer: Use double buffering.  Default value : "on" . -->
+	<!-- SmoothLines: Smooth/AA the dialog lines.  Default value : "on" . -->
+	<!-- MoreRes: Show more screen resolutions in the drop down.  By default only hardware supported modes are shown..  Default value : "off" . -->
+	<!-- FullScreen: Run the game in a full screen mode..  Default value : "off" . -->
+	<option>
+		<name>FullScreen</name>
+		<value>on</value>
+	</option>
+	<!-- NoGLTexSubImage: Do not use texture area replacing.  Required to be able to scorch the ground..  Default value : "off" . -->
+	<!-- NoGLCubeMap: Draw the water without using cubemap relfections..  Default value : "off" . -->
+	<!-- NoGLSphereMap: Draw the water without using sphere map relfections..  Default value : "off" . -->
+	<!-- NoGLExt: Do not use any OpenGL extensions.  Turn off to disable any extra OpenGL features..  Default value : "off" . -->
+	<!-- NoGLMultiTex: Only use one texture for all models and the landscape..  Default value : "off" . -->
+	<!-- NoGLEnvCombine: Only use one texture on the landscape..  Default value : "off" . -->
+	<!-- NoGLHardwareMipmaps: Generate texture LOD in software only..  Default value : "off" . -->
+	<!-- NoGLDrawElements: Draw grids without using draw elements..  Default value : "off" . -->
+	<!-- NoGLShaders: Do not use shaders..  Default value : "off" . -->
+	<!-- SimpleWaterShaders: Use simple shaders for the water..  Default value : "off" . -->
+	<!-- NoThreadedDraw: Don't calculate landscape in another thread.  Default value : "off" . -->
+	<!-- InvertUpDownKeys: Invert/reverse the tanks up/down elevation directions..  Default value : "off" . -->
+	<!-- InvertMouse: Invert/reverse the mouses y-axis when rotating camera..  Default value : "off" . -->
+	<!-- NoSound: Do not play any sound..  Default value : "off" . -->
+	<!-- NoCountDownSound: Do not play the count down beep sound..  Default value : "off" . -->
+	<!-- NoChannelTextSound: Do not play the channel text being added sound..  Default value : "off" . -->
+	<!-- NoMusic: Do not play any music..  Default value : "off" . -->
+	<!-- NoShadows: Do not draw real-time shadows..  Default value : "off" . -->
+	<!-- NoGLShadows: Do not draw GL shadow map shadows..  Default value : "off" . -->
+	<!-- NoGLObjectShadows: Do not draw GL shadow map shadows for objects (trees/tanks)..  Default value : "on" . -->
+	<!-- NoObjectReflections: Do not draw the reflections of objects..  Default value : "on" . -->
+	<!-- NoParticleReflections: Do not draw the reflections of particles..  Default value : "on" . -->
+	<!-- NoParticleDraw: Do not draw any particles..  Default value : "off" . -->
+	<!-- NoParticleSimulate: Do not use custom simulations for the  particles..  Default value : "off" . -->
+	<!-- DrawNormals: Show landscape normals on the landscape.  Default value : "off" . -->
+	<!-- DrawGraphicalShadowMap: Shows the depth map used for shadowing.  Default value : "off" . -->
+	<!-- DrawGraphicalReflectionMap: Shows the reflection map used for water reflections.  Default value : "off" . -->
+	<!-- DrawLines: Do not fill in the landscape.  Default value : "off" . -->
+	<!-- DrawLandLOD: Show the LOD levels and indices of the land patches.  Default value : "off" . -->
+	<!-- DrawCullingDistance: The distance at which objects will be culled.  Default value : "200.00000000" . -->
+	<!-- DrawFadeStartDistance: The distance before the draw distance at which objects will be faded.  Default value : "180.00000000" . -->
+	<!-- DrawCollisionGeoms: Show object collision geoms.  Default value : "off" . -->
+	<!-- DrawCollisionSpace: Show object collision space.  Default value : "off" . -->
+	<!-- DrawBoundingSpheres: Show landscape bounding spheres on the landscape.  Default value : "off" . -->
+	<!-- NoLenseFlare: Do not show the full lense flare effect.  Default value : "on" . -->
+	<!-- NoTankSkins: Do not texture the tank models..  Default value : "off" . -->
+	<!-- AccessorySortKey: The key to sort accessories by before displaying.  Default value : "SortNothing" possible values = [ "SortNothing"  "SortName"  "SortPrice" ]. -->
+	<!-- DrawWater: Draw the water.  Default value : "on" . -->
+	<!-- DrawLandscape: Draw the landscape.  Default value : "on" . -->
+	<!-- DrawSurround: Draw the surround.  Default value : "on" . -->
+	<!-- DrawPlayerNames: Draw the names above the tanks.  Default value : "on" . -->
+	<!-- DrawPlayerIcons: Draw the icons above the tanks.  Default value : "on" . -->
+	<!-- DrawPlayerSight: Draw the aiming sight infront of the tanks.  Default value : "on" . -->
+	<!-- OldSightPosition: Draw the aiming sight aligned with the model and not the shot.  Default value : "off" . -->
+	<!-- VisibleSight: Draw the more visible aiming sight.  Default value : "on" . -->
+	<!-- DrawPlayerColor: Draw the player color triangle over the tank.  Default value : "on" . -->
+	<!-- DrawPlayerHealth: Draw the health bars above the tank.  Default value : "on" . -->
+	<!-- NoTrees: Do not draw any trees.  Default value : "off" . -->
+	<!-- NoTargets: Do not draw any targets/tanks (non-trees).  Default value : "off" . -->
+	<!-- NoDepthSorting: Do not depth sort sprites..  Default value : "off" . -->
+	<!-- HideFinalScore: Hide the score dialog that is automatically shown after shots.  Default value : "off" . -->
+	<!-- HideMenus: Should the menu title bars always be visible.  Default value : "off" . -->
+	<!-- NoVBO: Do not use Vertex Buffer Objects (if avaialable).  Default value : "off" . -->
+	<!-- NoModelLighting: Do not use dynamic lighting calculations for models.  Default value : "off" . -->
+	<!-- LandscapeTexture: Texture the landscape.  Default value : "on" . -->
+	<!-- WaterTexture: Texture the water.  Default value : "on" . -->
+	<!-- NoSkyLayers: Only draw one sky layer..  Default value : "off" . -->
+	<!-- NoSkyMovement: Do not animate the sky.  Default value : "off" . -->
+	<!-- NoPrecipitation: Do not draw precipitation.  Default value : "off" . -->
+	<!-- FrameTimer: Show the current number of frames per second (FPS).  Default value : "off" . -->
+	<!-- NoWaterMovement: Draw simpler less detailed water.  Default value : "off" . -->
+	<!-- NoWaterWaves: Draw water waves (breakers).  Default value : "off" . -->
+	<!-- NoWaterLOD: Draw water at minimum detail.  Default value : "off" . -->
+	<!-- NoLandLOD: Draw water at MAXIMUM detail.  Default value : "off" . -->
+	<!-- NoWaterReflections: Draw reflections in the water.  Default value : "off" . -->
+	<!-- NoProgressBackdrop: Do capture a screen shot and use it as the progress backdrop.  Default value : "off" . -->
+	<!-- ShowContextHelp: Show in game help tooltips for items that have it.  Default value : "on" . -->
+	<!-- ShowContextInfo: Show in game information tooltips for items that have it.  Default value : "on" . -->
+	<!-- LowTreeDetail: Only use low detail trees.  Faster..  Default value : "off" . -->
+	<!-- SoftwareMouse: Use a software mouse pointer.  Useful if mouse clicks are not aligned..  Default value : "off" . -->
+	<!-- SideScroll: Allows the user to scroll the viewport moving the mouse to the sides of the screen.  Default value : "on" . -->
+	<!-- StorePlayerCamera: Stores the camera position for each player and resets to that position on thier turn.  Default value : "off" . -->
+	<!-- RestricedCameraMovement: Keeps the player camera within the bounds of the landscape.  Default value : "on" . -->
+	<!-- SwapYAxis: Remaps mouse pointer from top of window to the bottom and vice-versa (MAC/OSX).  Default value : "off" . -->
+	<!-- ClientLogToFile: Client logs to file.  Default value : "off" . -->
+	<!-- ClientLogState: Client logs state (0 is off).  Default value : "0" . -->
+	<!-- ValidateServerIp: Checks if the server ip address matches the published address.  Default value : "on" . -->
+	<!-- NoPlanDraw: Do not show any drawings from other players on the plan window..  Default value : "off" . -->
+	<!-- AntiAlias: Use anti aliasing.  Default value : "0" Max = 4, Min = 0. -->
+	<!-- DialogSize: How large the on screen dialogs and menus are..  Default value : "2" Max = 3, Min = 0. -->
+	<!-- TexureSize: The texture details setting.  Lower is faster..  Default value : "1" Max = 2, Min = 0. -->
+	<!-- TankDetail: The tank details setting.  Lower is faster but shows less tank models..  Default value : "2" Max = 2, Min = 0. -->
+	<!-- EffectsDetail: The number of effects allowed at once..  Default value : "1" Max = 2, Min = 0. -->
+	<!-- SoundVolume: The master volume. Max = 128, Min = 0.  Default value : "128" Max = 128, Min = 0. -->
+	<!-- AmbientSoundVolume: The ambient sound effect volume. Max = 128, Min = 0.  Default value : "64" Max = 128, Min = 0. -->
+	<!-- MusicVolume: The music effect volume. Max = 128, Min = 0.  Default value : "128" Max = 128, Min = 0. -->
+	<!-- ScreenWidth: The window width to use (in pixels).  Default value : "800" . -->
+	<option>
+		<name>ScreenWidth</name>
+		<value>XXXX</value>
+	</option>
+	<!-- ScreenHeight: The window height to use (in pixels).  Default value : "600" . -->
+	<option>
+		<name>ScreenHeight</name>
+		<value>YYYY</value>
+	</option>
+	<!-- HostDescription: The description of this host given to any servers for stats..  Default value : "" . -->
+	<option>
+		<name>HostDescription</name>
+		<value>Unix</value>
+	</option>
+	<!-- OnlineUserName: The player name that will be used for all online games..  Default value : "Player" . -->
+	<!-- OnlineTankModel: The tank model that will be used for all online games..  Default value : "" . -->
+	<!-- OnlineUserIcon: The players icon, must be PNG 32x32 and less than 5000 bytes by default..  Default value : "" . -->
+	<!-- OnlineColor: The tank color that will be used for all online (non-team) games..  Default value : "0.00 0.00 0.00" . -->
+	<!-- BuyTab: The default buy tab.  Default value : "" . -->
+	<!-- LastVersionPlayed: What was the last version of scorched3d played.  Default value : "" . -->
+	<option>
+		<name>LastVersionPlayed</name>
+		<value>43.2a</value>
+	</option>
+	<!-- FocusPause: Pause the graphics display when mouse leaves window..  Default value : "on" . -->
+	<!-- OpenGLWarnings: Display any OpenGL warnings when the game starts.  Default value : "on" . -->
+</options>

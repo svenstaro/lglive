@@ -1,1 +1,1 @@
-openlierox
+openlierox -fullscreen -opengl
