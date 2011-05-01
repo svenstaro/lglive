@@ -56,15 +56,15 @@ copy_files() {
     cp -a /bin /etc /gamelist_* /home /lib /opt /root /run /sbin /srv /usr /var /mnt/root-lglive/
     mkdir /mnt/root-lglive/{dev,sys,proc,media,mnt,tmp,boot}
     chmod 777 /mnt/root-lglive/tmp/
-    mount --bind /mnt/root-lgive/tmp /tmp
+    mount --bind /mnt/root-lglive/tmp /tmp
 }
 
 install_bootloader() {
     cat /usr/lib/syslinux/mbr.bin > $DEVICE
 
-    sed -i 's|/boot/lglive|..|g' /mnt/boot-lglive/syslinux/syslinux.cfg
+    sed -i 's|/lglive/boot|..|g' /mnt/boot-lglive/syslinux/syslinux.cfg
     extlinux --install /mnt/boot-lglive/syslinux
-    sed -i 's|APPEND initrd|APPEND root=LABEL=root-lglive initrd|g' /mnt/boot-lglive/syslinux/syslinux.cfg
+    sed -i 's|APPEND initrd|APPEND root=/dev/disk/by-label/root-lglive initrd|g' /mnt/boot-lglive/syslinux/syslinux.cfg
 
     # bake kernel
     sed -i 's|HOOKS.*|HOOKS="base udev pata scsi sata resume filesystems"|g' /etc/mkinitcpio.conf
