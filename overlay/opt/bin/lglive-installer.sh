@@ -42,7 +42,7 @@ autopart() {
     parted -s $DEVICE mkpart primary 612 100%
     sleep 2
     mkfs.ext4 -L root-lglive ${DEVICE}3
-    ) | zenity --progres --title "Installation" --text="Partitioning" --auto-close --no-cancel --pulsate
+    ) | zenity --progress --title "Installation" --text="Partitioning" --auto-close --no-cancel --pulsate
 }
 
 copy_files() {
@@ -60,7 +60,7 @@ copy_files() {
     mkdir /mnt/root-lglive/{dev,sys,proc,media,mnt,tmp,boot}
     chmod 777 /mnt/root-lglive/tmp/
     mount --bind /mnt/root-lglive/tmp /tmp
-    ) | zenity --progres --title "Installation" --text="Copying files" --auto-close --no-cancel --pulsate
+    ) | zenity --progress --title "Installation" --text="Copying files" --auto-close --no-cancel --pulsate
 }
 
 install_bootloader() {
@@ -79,7 +79,7 @@ install_bootloader() {
     mount --bind /mnt/boot-lglive /boot
     
     mkinitcpio -p kernel26
-    ) | zenity --progres --title "Installation" --text="Installing bootloader" --auto-close --no-cancel --pulsate
+    ) | zenity --progress --title "Installation" --text="Installing bootloader" --auto-close --no-cancel --pulsate
 }
 
 echo ":: Device selection"
