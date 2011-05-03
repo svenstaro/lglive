@@ -5,7 +5,7 @@ if [[ $? -eq 0 ]]; then
 		list+=`udevadm info --attribute-walk --name=${disk}|grep ATTRS{model}|grep -o \".*\"| sed s/\"//g`
 		list+="\n`readlink -f ${disk}`\n"
 	done
-	dev=`echo -e ${list}|zenity --list --title="Choose USB device" --text="Choose the USB devive you want to use this for below.\nNote that it will need to have at least 50MB of free space." --column="Device" --column="Path" --print-column=2`
+	dev=`echo -e ${list}|zenity --list --title="Choose USB device" --text="Choose the USB device you want to use this for below.\nNote that it will need to have at least 50MB of free space." --column="Device" --column="Path" --print-column=2`
 	if [[ ${dev} != "" ]]; then
 		zenity --info --title="Create persistent home" --text="You will now be presented with a partition editor (gparted) for the device you have chosen. Please create a new partition the size you want and format it as FAT32. <b>Very important:</b> Label it 'LGLIVE_HOME' (no quotes), else it won't work."
 		sudo gparted ${dev}
