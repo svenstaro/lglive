@@ -26,9 +26,10 @@ mv /tmp/xchat.conf.new /etc/skel/.xchat2/xchat.conf
 # Check for existence of persistent home
 
 if [[ `blkid|grep -o LGLIVE_HOME` ]]; then
-  dialog --nocancel --menu "A persistent home for lglive has been detected on your medium. Do you want to make use of this home or use a default, non-persistent one?:" 15 72 15 "persistent" "Use persistent home" "default" "Use default home" 2>./temp_home
-  result=`cat ./temp_home`
-  if [[ "$result" == "persistent" ]]; then
+  dialog --nocancel --menu "A persistent home for lglive has been detected on your medium. Do you want to make use of this home or use a default, non-persistent one?:" 15 72 15 "persistent" "Use persistent home" "default" "Use default home" 2>./temp_pershome
+  temp_pershome=`cat ./temp_pershome`
+  rm ./temp_pershome
+  if [[ "$temp_pershome" == "persistent" ]]; then
     mkdir -p /home/gamer
     mount -L LGLIVE_HOME /home/gamer
     if [[ ! -f "/home/gamer/.xinitrc" ]]; then
@@ -103,24 +104,24 @@ cat /opt/templates/menu.tail >> $MENU
 
 # Ask user for keymap preference
 function keyboard_menu {
-dialog --nocancel --menu "Please choose your keymap:" 15 72 15 "de" "German" "us" "US English" "pl" "Polish" "ru" "Russian" "jp" "Japanese" "fr" "French" "es" "Spanish" "other" "Other" 2>./temp_kb
-result=`cat ./temp_kb`
-if [ "$result" == "other" ]; then
-  dialog --nocancel --inputbox "Type in one of these country codes to choose your keymap: be, bg, ca, ch, cz, de, dk, dvorak, es, fi, fr, gb, hu, it, jp, no, pl, pt, ru, se, sk, th, us" 10 72 2>./temp_kb
+dialog --nocancel --menu "Please choose your keymap:" 15 72 15 "de" "German" "us" "US English" "pl" "Polish" "ru" "Russian" "jp" "Japanese" "fr" "French" "es" "Spanish" "other" "Other" 2>./temp_keyboard
+temp_keyboard=`cat ./temp_keyboard`
+if [ "$temp_keyboard" == "other" ]; then
+  dialog --nocancel --inputbox "Type in one of these country codes to choose your keymap: be, bg, ca, ch, cz, de, dk, dvorak, es, fi, fr, gb, hu, it, jp, no, pl, pt, ru, se, sk, th, us" 10 72 2>./temp_keyboard
 fi
-result=`cat ./temp_kb`
+temp_keyboard=`cat ./temp_keyboard`
 }
 
-while [ "$result" == "" ] || [ "$result" == "other" ]; do
+while [ "$temp_keyboard" == "" ] || [ "$temp_keyboard" == "other" ]; do
   keyboard_menu
 done
 
 # Set X keymap 
-sed -i -e "/keyboard/i Option \"XkbLayout\" \"$result\"" /etc/X11/xorg.conf.d/10-evdev.conf
+sed -i -e "/keyboard/i Option \"XkbLayout\" \"$temp_keyboard\"" /etc/X11/xorg.conf.d/10-evdev.conf
 # Set console keymap
-sed -i -e "/KEYMAP/s/\".*\"/\"$result\"/" /etc/rc.conf
-rm ./temp_kb
-loadkeys $result
+sed -i -e "/KEYMAP/s/\".*\"/\"$temp_keyboard\"/" /etc/rc.conf
+rm ./temp_keyboard
+loadkeys $temp_keyboard
 
 # Find out whether we are on CD, USB or diskless
 label=`cat /proc/cmdline | grep -io 'archisolabel=[a-zA-Z0-9\-]*' | sed s/'archisolabel='//`
