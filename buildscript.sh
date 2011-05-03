@@ -144,8 +144,10 @@ base-iso ()
 {
   [ ! ${QUIET} == "y" ] && echo "===== Making base-iso ====="
   [ ! ${QUIET} == "y" ] && echo "base-iso: Copying boot-files"
-  mv "${WORKDIR}/root-image/boot" "${WORKDIR}/iso/${INSTALL_DIR}/boot" || true
-  mv "${WORKDIR}/iso/${INSTALL_DIR}/boot/memtest86+/memtest.bin" "${WORKDIR}/iso/${INSTALL_DIR}/boot/memtest"
+  mkdir -p ${WORKDIR}/iso/${INSTALL_DIR}/boot/${ARCH}
+  cp "${WORKDIR}/root-image/boot/System.map26" "${WORKDIR}/iso/${INSTALL_DIR}/boot/${ARCH}/"
+  cp "${WORKDIR}/root-image/boot/vmlinuz26" "${WORKDIR}/iso/${INSTALL_DIR}/boot/${ARCH}/"
+  cp "${WORKDIR}/root-image/boot/memtest86+/memtest.bin" "${WORKDIR}/iso/${INSTALL_DIR}/boot/memtest"
   [ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting due to error while moving boot files\e[00m" && exit 1
   mkdir -p ${WORKDIR}/iso/syslinux
   cp boot-files/splash.png ${WORKDIR}/iso/${INSTALL_DIR}/boot/ || return 1
@@ -165,7 +167,7 @@ base-iso ()
   else
     chroot ${BASEDIR}/${WORKDIR}/root-image mkinitcpio -c /etc/mkinitcpio.conf -k ${KVER} -g "/lglive.img" &>/dev/null || return 1
   fi
-  mv ${BASEDIR}/${WORKDIR}/root-image/lglive.img "${BASEDIR}/${WORKDIR}/iso/${INSTALL_DIR}/boot/lglive.img" &>/dev/null ||return 1
+  mv ${BASEDIR}/${WORKDIR}/root-image/lglive.img "${BASEDIR}/${WORKDIR}/iso/${INSTALL_DIR}/boot/${ARCH}/lglive.img" &>/dev/null || return 1
   sed -i "s/^CacheDir/\#CacheDir/" "${BASEDIR}/${WORKDIR}/root-image/etc/pacman.conf"
   sed -i "/localrepo/,+2d" "${BASEDIR}/${WORKDIR}/root-image/etc/pacman.conf"
   [ "$?" -ne 0 ] && echo -e "\e[01;31mbase-iso: Exiting due to error while running mkinitcpio\e[00m" && exit 1
