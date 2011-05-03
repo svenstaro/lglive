@@ -13,7 +13,7 @@ select_device() {
         fi
     done
 
-    zenity --question --title "Are you sure?" --text "<span color='red' size='x-large'><b>Are you sure?</b> All data on the drive $DEVICE will be deleted.</span>" --cancel-label="Cancel" --ok-label="Yes, erase it."
+    zenity --question --title "Are you sure?" --text "<span color='red' size='x-large'><b>Are you sure?</b> All data on the drive <b>$DEVICE</b> will be deleted.</span>" --cancel-label="Cancel" --ok-label="Yes, erase it."
 
     if [[ $? != 0 ]]; then
         exit
@@ -22,6 +22,7 @@ select_device() {
 }
 
 autopart() {
+    (
     # create partition table
     parted -s $DEVICE mklabel msdos
 
@@ -41,9 +42,11 @@ autopart() {
     parted -s $DEVICE mkpart primary 612 100%
     sleep 2
     mkfs.ext4 -L root-lglive ${DEVICE}3
+    ) | zenity --progres --title "Installation" --text="Partitioning" --auto-close --no-cancel --pulsate
 }
 
 copy_files() {
+    (
     # copy boot files
     mkdir /mnt/boot-lglive/
     mount -L boot-lglive /mnt/boot-lglive/
@@ -57,9 +60,11 @@ copy_files() {
     mkdir /mnt/root-lglive/{dev,sys,proc,media,mnt,tmp,boot}
     chmod 777 /mnt/root-lglive/tmp/
     mount --bind /mnt/root-lglive/tmp /tmp
+    ) | zenity --progres --title "Installation" --text="Copying files" --auto-close --no-cancel --pulsate
 }
 
 install_bootloader() {
+    (
     cat /usr/lib/syslinux/mbr.bin > $DEVICE
 
     sed -i 's|/lglive/boot|..|g' /mnt/boot-lglive/syslinux/syslinux.cfg
@@ -74,6 +79,7 @@ install_bootloader() {
     mount --bind /mnt/boot-lglive /boot
     
     mkinitcpio -p kernel26
+    ) | zenity --progres --title "Installation" --text="Installing bootloader" --auto-close --no-cancel --pulsate
 }
 
 echo ":: Device selection"
