@@ -74,7 +74,7 @@ copy_files()
     cp ${MNTPNT}/syslinux/*.0 ${TMPDIR}
     cp ${MNTPNT}/syslinux/*.c32 ${TMPDIR}
     cp ${MNTPNT}/syslinux/*.com ${TMPDIR}
-    cp -r ${MNTPNT}/syslinux/hdt ${TMPDIR}
+    #cp -r ${MNTPNT}/syslinux/hdt ${TMPDIR}
     for _cfg in ${MNTPNT}/syslinux/*.cfg; do
         sed 's|^#IPAPPEND|IPAPPEND|g' ${_cfg} > ${TMPDIR}/$(basename ${_cfg})
     done
