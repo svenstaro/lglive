@@ -9,7 +9,7 @@ set -e
 
 TMPDIR=/tmp/archiso-pxe-server
 VERSION=20101216
-INSTALL_DIR=arch
+INSTALL_DIR=lglive
 DNSMASQ_SKIP=false
 NBD_SKIP=false
 
@@ -59,12 +59,12 @@ copy_files()
     if [ -f ${MNTPNT}/${INSTALL_DIR}/boot/i686/vmlinuz26 ]; then
         mkdir -p ${TMPDIR}/${INSTALL_DIR}/boot/i686
         cp ${MNTPNT}/${INSTALL_DIR}/boot/i686/vmlinuz26 ${TMPDIR}/${INSTALL_DIR}/boot/i686
-        cp ${MNTPNT}/${INSTALL_DIR}/boot/i686/archiso.img ${TMPDIR}/${INSTALL_DIR}/boot/i686
+        cp ${MNTPNT}/${INSTALL_DIR}/boot/i686/lglive.img ${TMPDIR}/${INSTALL_DIR}/boot/i686
     fi
     if [ -f ${MNTPNT}/${INSTALL_DIR}/boot/x86_64/vmlinuz26 ]; then
         mkdir -p ${TMPDIR}/${INSTALL_DIR}/boot/x86_64
         cp ${MNTPNT}/${INSTALL_DIR}/boot/x86_64/vmlinuz26 ${TMPDIR}/${INSTALL_DIR}/boot/x86_64
-        cp ${MNTPNT}/${INSTALL_DIR}/boot/x86_64/archiso.img ${TMPDIR}/${INSTALL_DIR}/boot/x86_64
+        cp ${MNTPNT}/${INSTALL_DIR}/boot/x86_64/lglive.img ${TMPDIR}/${INSTALL_DIR}/boot/x86_64
     fi
 
     mkdir -p ${TMPDIR}/pxelinux.cfg
