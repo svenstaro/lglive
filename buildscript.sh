@@ -158,8 +158,6 @@ base-iso ()
   [ ! ${QUIET} == "y" ] && echo "base-iso: Making initrd image"
   git clone git://projects.archlinux.org/archiso.git archiso-temp &>/dev/null || return 1
   cp -r archiso-temp/archiso/{hooks,install} ${BASEDIR}/${WORKDIR}/root-image/lib/initcpio/ || return 1
-  # TODO: Hacky workaround until klibc-utils fstype supports udf
-  #sed '/if mount -r -t "${_FSTYPE}" \/dev\/archiso \/bootmnt >\/dev\/null 2>&1; then/c\if mount -r -t udf \/dev\/archiso \/bootmnt >\/dev\/null 2>&1; then' -i ${BASEDIR}/${WORKDIR}/root-image/lib/initcpio/hooks/archiso || return 1
   rm -r archiso-temp
   cp ${BASEDIR}/mkinitcpio.conf ${BASEDIR}/${WORKDIR}/root-image/etc/mkinitcpio.conf || return 1
   if [ ${VERBOSE} == "y" ]; then
