@@ -6,4 +6,4 @@ zenity --info --title="Welcome to live.linuX-gamers!" --text "Here, I made you s
 - If the <b>panels</b> are blocking, <b>right click and choose 'Hide panels'</b>
 - For more info, see the <b>Release Notes</b> in the right click menu
 
-<b><span color='red'>You are using this distribution on your own risk.</span></b>"
+<b><span color='red'>You are using this distribution at your own risk.</span></b>"
