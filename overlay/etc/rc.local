@@ -33,6 +33,7 @@ if [[ `blkid|grep -o LGLIVE_HOME` ]]; then
     mkdir -p /home/gamer
     mount -L LGLIVE_HOME /home/gamer
     if [[ ! -f "/home/gamer/.xinitrc" ]]; then
+      # This should only happen if this is a fresh home
       su -c "cp -r /etc/skel/.[a-zA-Z0-9]* /home/gamer/"
       su -c "cp -r /etc/skel/* /home/gamer/"
     fi
