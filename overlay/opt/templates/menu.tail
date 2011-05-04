@@ -1,9 +1,11 @@
    [sep]
+   [nop] (Advanced)
    [exec] (Release Notes) {arora /opt/lglive.html}
-#   [exec] (Save settings to USB) {sudo /opt/bin/create_pershome.sh}
+   [exec] (Create persistent home) {sudo /opt/bin/lglive-pershome.sh}
    [exec] (Host lglive in LAN) {sudo /opt/bin/lglive-lanhost.sh}
    [exec] (Install lglive on hard drive) {sudo /opt/bin/lglive-installer.sh}
    [sep]
+   [nop] (Tools)
    [exec] (xterm Terminal) {xterm}
    [exec] (Mouse/Keyboard Config) {lxinput}
    [exec] (Wicd Network Config) {wicd-client -n}
