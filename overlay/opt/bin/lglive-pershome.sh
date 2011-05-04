@@ -5,7 +5,7 @@ However, you can create a persistent home yourself on any writable block device 
 
 Example:
 <b>sudo cfdisk /dev/sda</b> (creates sda1)
-<b>mkfs.ext4 -L LGLIVE_HOME /dev/sda1</b> (makes filesystem)
+<b>sudo mkfs.ext4 -L LGLIVE_HOME /dev/sda1</b> (makes filesystem)
 "
 
 #zenity --question --title="Create Persistent Home" --text="Do you want to create a persistent home on a currently inserted USB device? You will be able to choose this device after this dialog. Please note that this should only be done by experienced users as this can be a dangerous operation and data loss may occur when the wrong device is chosen."
