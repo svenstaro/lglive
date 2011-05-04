@@ -101,6 +101,7 @@ install_bootloader() {
     mount --bind /mnt/boot-lglive /boot
     
     mkinitcpio -p kernel26
+    mv /boot/lglive.img /boot/i686/lglive.img
     echo "100"
     ) | zenity --progress --title "Installation" --text="Installing bootloader" --auto-close --no-cancel --percentage=0
 }
