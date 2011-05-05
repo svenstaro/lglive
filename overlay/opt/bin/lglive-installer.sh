@@ -33,7 +33,7 @@ autopart() {
     parted -s $DEVICE set 1 boot on
     echo "20"
     sleep 2
-    mkfs.ext2 -L boot-lglive ${DEVICE}1
+    mkfs.ext2 -q -L boot-lglive ${DEVICE}1
     echo "30"
     sleep 2
 
@@ -50,7 +50,7 @@ autopart() {
     parted -s $DEVICE mkpart primary 612 100%
     echo "60"
     sleep 2
-    mkfs.ext4 -L root-lglive ${DEVICE}3
+    mkfs.ext4 -q -L root-lglive ${DEVICE}3
     echo "70"
     sleep 2
     echo "100"
