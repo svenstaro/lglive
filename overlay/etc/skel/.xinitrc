@@ -18,6 +18,6 @@ feh --bg-fill ~/.blackbox/Backgrounds/wallpaper.png
 # enable ctrl-alt-backspace again for easy x-killage
 setxkbmap -option terminate:ctrl_alt_bksp&
 
-( sleep 5 && /opt/bin/wbar_restore )&
+( sleep 2 && /opt/bin/wbar_restore )&
 
 exec blackbox
