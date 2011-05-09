@@ -1,5 +1,5 @@
 i: /usr/share/pixmaps/wbar/osxbarback.png
-c: wbar --bpress --above-desk --pos right --isize 40 --idist 5 --nanim 4 --falfa 65 --vbar
+c: wbar --bpress --pos right --isize 40 --idist 5 --nanim 4 --falfa 65 --vbar
 t: /usr/share/fonts/TTF/VeraBd/12
 
 i: /usr/share/pixmaps/utilities-terminal.png
