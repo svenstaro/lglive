@@ -17,13 +17,13 @@ set fullscreen true
 #
 # The horizontal size of the Tux Racer window
 #
-set x_resolution 1280
+set x_resolution XXXX
 
 # y_resolution
 #
 # The vertical size of the Tux Racer window
 #
-set y_resolution 800
+set y_resolution YYYY
 
 # x_resolution_half_width
 #
